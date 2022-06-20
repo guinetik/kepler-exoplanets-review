@@ -1,7 +1,7 @@
 export default function ReviewsComponent() {
   return (
-    <div className="pl-1 pr-1 pt-1 w-full h-full">
-      <section className="grid grid-cols-1 gap-5 overflow-y-scroll max-h-[540px]">
+    <div className="pl-2 pr-2 pt-1 w-full h-full">
+      <section className="grid grid-cols-1 gap-5 lg:overflow-y-scroll lg:max-h-[540px]">
         <ReviewCardComponent />
         <ReviewCardComponent />
         <ReviewCardComponent />

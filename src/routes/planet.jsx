@@ -13,32 +13,34 @@ export default function PlanetPage() {
           <h1 className="text-white glow lettering uppercase text-4xl font-light z-10 block ml-2 mb-2">
             Planet Name
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             <div
               className="w-full
-              min-h-[420px] 
+              min-h-[420px]
               rounded-lg bg-gradient-to-t p-[1px] from-green-300 to-orange-500"
             >
               <div className="bg-black rounded-lg w-full h-full p-[1px]">
                 <PlanetView />
-                <div className="p-2 grid grid-cols-1 gap-2 ml-6">
-                  <Button
-                  className="w-full"
-                    outline={true}
-                    gradientDuoTone="cyanToBlue"
-                    size="lg"
-                  >
-                    <IoMdRocket className="text-xl ml-2 group-hover:animate-bounce_y transition-all"></IoMdRocket>
-                    <span className="w-[220px]">Write a Review</span>
-                  </Button>
-                  <Button
-                    outline={true}
-                    gradientDuoTone="purpleToPink"
-                    size="lg"
-                  >
-                    <IoMdRocket className="text-xl ml-2 group-hover:animate-bounce_y transition-all"></IoMdRocket>
-                    Checkout on exoplanetarchive
-                  </Button>
+                <div className="flex justify-center w-full p-5">
+                  <div className="grid grid-cols-1 gap-2">
+                    <Button
+                      className="w-full"
+                      outline={true}
+                      gradientDuoTone="cyanToBlue"
+                      size="lg"
+                    >
+                      <IoMdRocket className="text-xl ml-2 group-hover:animate-bounce_y transition-all"></IoMdRocket>
+                      <span className="w-[192px]">Write a Review</span>
+                    </Button>
+                    <Button
+                      outline={true}
+                      gradientDuoTone="purpleToPink"
+                      size="lg"
+                    >
+                      <IoMdRocket className="text-xl ml-2 group-hover:animate-bounce_y transition-all"></IoMdRocket>
+                      Open on ExoplanetArchive
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -52,11 +54,13 @@ export default function PlanetPage() {
             </div>
             <div
               className="w-full h-full
+            md:col-span-2
+            lg:col-span-1
             xl:col-span-2
             rounded-lg bg-gradient-to-tr p-[1px] from-cyan-300 to-fuchsia-500"
             >
               <div className="bg-black rounded-lg w-full h-full p-[1px]">
-                <ReviewsComponent/>
+                <ReviewsComponent />
               </div>
             </div>
           </div>

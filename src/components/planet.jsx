@@ -3,8 +3,8 @@ import { useEffect } from "react";
 // 🌱 CHARACTERISTICS 🌱
 const planet_radius = 125;
 const atmosphere_thickness = 1;
-const offset_x = 0;
-const offset_y = -50;
+let offset_x = 0;
+let offset_y = -50;
 
 const TAU = Zdog.TAU;
 let isSpinning = true;
@@ -337,9 +337,9 @@ function regenerate_world() {
       onDragStart: function () {
         isSpinning = false;
       },
-      onDragEnd: function() {
+      onDragEnd: function () {
         isSpinning = true;
-      }
+      },
     });
     regenerate = false;
     generate_world(space, true);
@@ -350,23 +350,29 @@ function regenerate_world() {
 export default function PlanetView() {
   useEffect(() => {
     // 🐶 ZDOG ILLUSTRATION 🐶
-    if(!space) {
-        space = new Zdog.Illustration({
-            element: "#spaceCanvas",
-            dragRotate: true,
-            resize:true,
-            rotate: { x: -TAU * 0.05 },
-            onDragStart: function () {
-              isSpinning = false;
-            },
-          });
-          // console.log("space", space);
-          generate_world(space);
-    }
+    space = new Zdog.Illustration({
+      element: "#spaceCanvas",
+      dragRotate: true,
+      resize: true,
+      rotate: { x: -TAU * 0.05 },
+      onDragStart: function () {
+        isSpinning = false;
+      },
+      onDragEnd:function() {
+        isSpinning=true
+      },
+      onResize: function (width) {
+        if(space) {
+          space.zoom = width / 500;
+        }
+      }
+    });
+    // console.log("space", space);
+    generate_world(space);
   });
   return (
-    <div className="h-[420px]">
-      <canvas id="spaceCanvas" className="w-full" height="420"></canvas>
+    <div className="h-[400px] flex justify-center">
+      <canvas id="spaceCanvas" className="w-full" height="400"></canvas>
     </div>
   );
 }
