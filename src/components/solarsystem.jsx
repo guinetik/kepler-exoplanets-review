@@ -71,6 +71,7 @@ const PlanetaryBodies = (props) => {
             onMouseOut={onPlanetBodyOut}
             key={link}
             className={className}
+            style={{'color':planet.color}}
             to={link}
           >
             {planet.displayName}
