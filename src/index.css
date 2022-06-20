@@ -1,0 +1,5 @@
+@import url(./styles/app.css);
+@import url(./styles/bg.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

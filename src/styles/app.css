@@ -1,0 +1,30 @@
+html {
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow-x: hidden;
+}
+.active {
+  color: white !important;
+  font-weight: bold;
+}
+
+.lettering {
+  font-family: "lato" !important;
+}
+
+.glow {
+  -webkit-animation: glow 10s ease-in-out infinite alternate;
+  -moz-animation: glow 10s ease-in-out infinite alternate;
+  animation: glow 10s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03a9f4,
+      0 0 40px #e1f5fe, 0 0 50px #b3e5fc, 0 0 60px #81d4fa, 0 0 70px #4fc3f7;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #00bcd4, 0 0 40px #e0f7fa,
+      0 0 50px #b2ebf2, 0 0 60px #80deea, 0 0 70px #4dd0e1, 0 0 80px #26c6da;
+  }
+}
