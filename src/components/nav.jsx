@@ -2,6 +2,7 @@ import { Navbar } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
 import { Avatar } from "flowbite-react";
 import { NavLink } from "react-router-dom";
+import logo from '../logo.svg'
 
 const USER_MODEL = {
     name:"Gui",
@@ -61,7 +62,7 @@ export default function KeplerNav() {
     <Navbar fluid={true} rounded={true}>
       <Navbar.Brand href="/">
         <img
-          src="https://flowbite.com/docs/images/logo.svg"
+          src={logo}
           className="mr-3 h-6 sm:h-9"
           alt="Logo"
         />
@@ -158,7 +159,7 @@ const NavDropDown = (props) => {
       label={
         <Avatar
           alt="User settings"
-          img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+          img="https://ui-avatars.com/api/?name=John+Doe"
           rounded={true}
         />
       }
