@@ -6,7 +6,6 @@ import KeplerNav from "./components/nav";
 export default function App() {
   return (
     <div>
-      
       <KeplerNav/>
       <Outlet />
       <StarsBg/>

@@ -59,7 +59,7 @@ export default function KeplerNav() {
   let signedin = true;
 
   return (
-    <Navbar fluid={true} rounded={true}>
+    <Navbar fluid={true} rounded={true} className="z-10">
       <Navbar.Brand href="/">
         <img
           src={logo}

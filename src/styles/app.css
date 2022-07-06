@@ -1,5 +1,4 @@
 html {
-  height: 100%;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
   overflow-x: hidden;
 }
@@ -19,12 +18,84 @@ html {
 }
 
 @-webkit-keyframes glow {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03a9f4,
-      0 0 40px #e1f5fe, 0 0 50px #b3e5fc, 0 0 60px #81d4fa, 0 0 70px #4fc3f7;
+  0% {
+    text-shadow: 0 0 10px rgba(255,255,255,.8),
+                 0 0 20px rgba(255,255,255,.8),
+                 0 0 22px  rgba(255,255,255,.8),
+                 0 0 40px  rgba(66,220,219,.8),
+                 0 0 60px  rgba(66,220,219,.8),
+                 0 0 80px  rgba(66,220,219,.5),
+                 0 0 100px rgba(66,220,219,.5),
+                 0 0 140px rgba(66,220,219,.5),
+                 0 0 200px rgba(66,220,219,.5);
   }
+  100% {
+    text-shadow: 0 0 2px rgba(255,255,255,.8),
+                 0 0 8px rgba(255,255,255,.8),
+                 0 0 10px rgba(255,255,255,.8),
+                 0 0 20px rgba(66,220,219,.8),
+                 0 0 30px rgba(66,220,219,.8),
+                 0 0 40px rgba(66,220,219,.8),
+                 0 0 50px rgba(66,220,219,.5),
+                 0 0 80px rgba(66,220,219,.5);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+.rainbowText {
+  background-image: linear-gradient(
+    to right,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: move 30s linear infinite;
+  -moz-animation: move 30s linear infinite;
+  animation: move 30s linear infinite;
+}
+
+@keyframes move {
   to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #00bcd4, 0 0 40px #e0f7fa,
-      0 0 50px #b2ebf2, 0 0 60px #80deea, 0 0 70px #4dd0e1, 0 0 80px #26c6da;
+    background-position: 100vh;
+  }
+}
+
+.fluid-button-bar a {
+  /*this !important HURTS MY SOUL BUT THIS COMPONENT IS MANAGED BY FLOW-BITE SO THIS IS THE BEST I CAME UP WITH IN A JIFFY*/
+  width: 100% !important;
+}
+
+.fluid-button-bar span {
+  /*overriding lib behavior sucks I know bear with me*/
+  width: 100% !important;
+  justify-content: center;
+  gap:1em;
+}
+.stylistic-quote-mark {
+  font-size: 5rem;
+  right: 100%;
+  @apply mr-2 hidden text-cyan-500 absolute top-0 leading-none;
+}
+
+@screen sm {
+  .stylistic-quote-mark {
+    @apply block;
   }
 }
