@@ -69,7 +69,7 @@ export default function Home() {
                         gradientDuoTone="pinkToOrange"
                         size="xl"
                       >
-                        <GrSolaris className="text-xl group-hover:animate-pulse transition-all" />
+                        <GrSolaris className="text-xl group-hover:animate-spin transition-all" />
                         Discover The Stars
                       </Button>
                       <Button
