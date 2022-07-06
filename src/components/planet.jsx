@@ -1,8 +1,11 @@
 import Zdog from "zdog";
 import { useEffect } from "react";
+/* 
+Inspired from https://codepen.io/robbobfrh84/pen/pmXYzY
+*/
 // 🌱 CHARACTERISTICS 🌱
 const planet_radius = 125;
-const atmosphere_thickness = 1;
+const atmosphere_thickness = 0;
 let offset_x = 0;
 let offset_y = -50;
 
@@ -30,7 +33,7 @@ function generate_world(space, randomMass) {
     addTo: space,
     translate: { x: offset_x, y: offset_y },
     path: [{ y: planet_radius * -1 }, { y: (planet_radius + 50) * -1 }],
-    stroke: 7,
+    stroke: 2,
     color: "firebrick",
   });
   const north_pole_mark = new Zdog.Ellipse({
@@ -186,11 +189,11 @@ function generate_world(space, randomMass) {
             });
             landMassCount++;
             // 🏔⬆️ BUILD MOUNTAINS UP!
-            // for (var a = 0; a < newAlt; a++) {
-            //   set_cordinate_mark({ lat: lat+sLat, lng: lng+sLng, radius: pr*2+radShift, stroke: setStk,
-            //   altitude: a, color: cols[newAlt], shape: "poly", sides: 6 })
-            //   landMassCount++
-            // }
+            /* for (var a = 0; a < newAlt; a++) {
+              set_cordinate_mark({ lat: lat+sLat, lng: lng+sLng, radius: pr*2+radShift, stroke: setStk,
+              altitude: a, color: cols[newAlt], shape: "poly", sides: 6 })
+              landMassCount++
+            } */
           }
           landKey[stage + "-" + key + "-" + (i - 1)] = newAlt;
         }
@@ -358,14 +361,14 @@ export default function PlanetView() {
       onDragStart: function () {
         isSpinning = false;
       },
-      onDragEnd:function() {
-        isSpinning=true
+      onDragEnd: function () {
+        isSpinning = true;
       },
       onResize: function (width) {
-        if(space) {
+        if (space) {
           space.zoom = width / 500;
         }
-      }
+      },
     });
     // console.log("space", space);
     generate_world(space);
