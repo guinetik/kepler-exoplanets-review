@@ -24,6 +24,15 @@ export default function SolarSystem(props) {
         <span id="tooltip-title">Tooltip content</span>
         <div className="tooltip-arrow" data-popper-arrow></div>
       </div>
+      <div className="absolute bottom-4 left-4 right-4 bg-slate-800 p-2">
+        <aside className="text-xs text-slate-500">
+          Hypothetical Visualization. Orbits not to scale.
+          <br />
+          Star color infered from star type. Planet sizes proportional to planet's radius in Jupiter units.
+          Planet orbital duration proportional to orbital period in days and orbital tilt proportinal
+          to orbit's real eccentricity. Planet colors infered from planet type and visualization type provided by NASA.
+        </aside>
+      </div>
       <PlanetaryBodies planets={props.planets}></PlanetaryBodies>
       <canvas
         id="canvas"
@@ -71,7 +80,7 @@ const PlanetaryBodies = (props) => {
             onMouseOut={onPlanetBodyOut}
             key={link}
             className={className}
-            style={{'color':planet.color}}
+            style={{ color: planet.color }}
             to={link}
           >
             {planet.displayName}
@@ -92,6 +101,7 @@ const PlanetaryBodies = (props) => {
 Inspired by https://codepen.io/tiencoffee/pen/OePgEg
  */
 const CreateSolarSystem = (solarSystem) => {
+  //console.log("creating solar system");
   let isSpinning = true;
   let selectedPlanet = null;
   let illo = new Zdog.Illustration({
@@ -186,7 +196,7 @@ const CreateSolarSystem = (solarSystem) => {
   Interactivity inspired from https://codepen.io/gregja/pen/rEGmGB 
   */
   const canvas_visible = document.getElementById("canvas");
-  const tool_tip = document.getElementById("tooltip-default");
+  /* const tool_tip = document.getElementById("tooltip-default");
   //
   const getMousePos = function (canvas, evt) {
     // It's a very reliable algorithm to get mouse coordinates (don't use anything else)
@@ -259,7 +269,7 @@ const CreateSolarSystem = (solarSystem) => {
     } else {
       resetCanvas();
     }
-  }
+  } */
   function resetCanvas() {
     if (pause) {
       pause = false;
@@ -281,8 +291,8 @@ const CreateSolarSystem = (solarSystem) => {
       planet.originalColor = planet.color;
       planet.color = "#FFF";
       planet.originalStroke = planet.stroke;
-      planet.stroke = planet.originalStroke + planet.originalStroke*0.5;
-      console.log("planet", planet.addTo);
+      planet.stroke = planet.originalStroke + planet.originalStroke * 0.5;
+      //console.log("planet", planet.addTo);
       //tool_tip.style.left = left + 20 + "px";
       //tool_tip.style.top = top + 100 + "px";
       // console.log("onPlanetMouseOver", planet.color, planet.originalColor);
@@ -293,12 +303,12 @@ const CreateSolarSystem = (solarSystem) => {
         selectedPlanet.stroke = selectedPlanet.originalStroke;
       }
       selectedPlanet = planet;
-      pause=true;
+      pause = true;
     }
   };
   //
   onPlanetMouseOut = () => {
-    if(selectedPlanet) {
+    if (selectedPlanet) {
       selectedPlanet.color = selectedPlanet.originalColor;
       selectedPlanet.stroke = selectedPlanet.originalStroke;
       selectedPlanet = null;
@@ -306,10 +316,10 @@ const CreateSolarSystem = (solarSystem) => {
       animate(solarSystem, illo);
       //tool_tip.classList.add("opacity-0");
     }
-  }
+  };
   //
   let context_visible = canvas_visible.getContext("2d");
-  canvas_visible.addEventListener("click", shapeClicked, false);
+  //canvas_visible.addEventListener("click", shapeClicked, false);
   //canvas_visible.addEventListener("mousemove", onMouseMove, false);
   //canvas_visible.addEventListener("mouseleave", resetCanvas, false);
 };

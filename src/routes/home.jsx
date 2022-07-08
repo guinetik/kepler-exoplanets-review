@@ -4,11 +4,13 @@ import { GrSolaris } from "react-icons/gr";
 import Quote from "../components/quote";
 export default function Home() {
   return (
-    <main className="w-full flex justify-center items-center xl:h-screen xl:-mt-20 mb-10">
-      <div className="m-auto">
-        <h1 className="text-white glow lettering uppercase font-light z-10 block px-2 mb-8 mt-4 lg:mt-8 text-center w-full 
-        text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
-          Welcome to Exoplanet Review
+    <main className="w-full flex justify-center items-center mb-10">
+      <div className="m-auto mt-12">
+      <h1
+          className="text-white glow lettering uppercase font-light px-2 mb-8 mt-8 text-center w-full 
+        text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-6xl"
+        >
+          Welcome to Exoplanets Review
         </h1>
         <div className="w-full flex items-center justify-center">
           <div className="container mx-10">
@@ -28,17 +30,13 @@ export default function Home() {
                 border-slate-500 p-4 space-y-3 w-full rounded-bl-lg rounded-br-lg xl:rounded-bl-none xl:rounded-tr-lg bg-black bg-opacity-80"
                 >
                   <div className="place-self-center">
-                    <h1 className="w-full lettering mb-4 tracking-tight leading-none text-cyan-200 text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl">
+                    <h1 className="w-full lettering mb-4 tracking-tight leading-none text-cyan-200 text-2xl sm:text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl">
                       🧑‍🚀GREETINGS, SPACE DWELERS!
                     </h1>
-                    <p className="w-full p-2 lg:p-6 font-light md:text-lg lg:text-xl text-slate-300">
-                      <Quote/>
-                      <p>
-                      
-                      </p>
-                      .
-                      <br />
-                      <br />
+                    <div className="px-4 lg:px-8 xl:px-12">
+                    <Quote/>
+                    </div>
+                    <p className="w-full p-2 lg:p-6 font-light md:text-lg lg:text-xl text-slate-300 mt-4">
                       This website is a collection of the <strong>
                         227
                       </strong>{" "}
@@ -64,7 +62,7 @@ export default function Home() {
                     </p>
                     <div className="grid items-center md:grid-cols-2 grid-cols-1 justify-items-stretch md:justify-items-center fluid-button-bar gap-4 my-8 mx-4 lg:mx-10">
                       <Button
-                        href="/#/stars"
+                        href="/exoplanets-review/#/stars/"
                         outline={true}
                         gradientDuoTone="pinkToOrange"
                         size="xl"
@@ -73,7 +71,7 @@ export default function Home() {
                         Discover The Stars
                       </Button>
                       <Button
-                        href="/#/planets"
+                        href="/exoplanets-review/#/planets/"
                         outline={true}
                         gradientDuoTone="cyanToBlue"
                         size="xl"
