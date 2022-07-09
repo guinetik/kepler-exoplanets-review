@@ -464,7 +464,7 @@ const AppData = {
     if (AppData.exoplanets.length == 0) {
       console.time("loading_exos");
       const binary = await fetch(
-        "/exoplanets-review/data/out/exoplanets.json.gz"
+        "/exoplanets-review/data/out/exoplanets.json"
       );
       AppData.exoplanets = await binary.json();
       console.timeEnd("loading_exos");
@@ -473,7 +473,7 @@ const AppData = {
     if (AppData.stars.length == 0) {
       console.time("loading_stars");
       const binary = await fetch(
-        "/exoplanets-review/data/out/exostars.json.gz"
+        "/exoplanets-review/data/out/exostars.json"
       );
       AppData.stars = await binary.json();
       console.timeEnd("loading_stars");
