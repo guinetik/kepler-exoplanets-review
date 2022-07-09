@@ -320,7 +320,7 @@ function generate_world(space, randomMass) {
       requestAnimationFrame(animate);
     }
   }
-  console.log("total clouds, land: ", cloudCount, landMassCount);
+  //console.log("total clouds, land: ", cloudCount, landMassCount);
 
   animate();
 }

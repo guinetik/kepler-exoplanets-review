@@ -2,12 +2,12 @@ import { Navbar } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
 import { Avatar } from "flowbite-react";
 import { NavLink } from "react-router-dom";
-import logo from '../logo.svg'
+import logo from "../logo.svg";
 
 const USER_MODEL = {
-    name:"Gui",
-    username:"guinetik"
-}
+  name: "Gui",
+  username: "guinetik",
+};
 
 const DROPDOWN_ITEMS = [
   {
@@ -59,23 +59,29 @@ export default function KeplerNav() {
   let signedin = true;
 
   return (
-    <Navbar fluid={true} rounded={true} className="z-10">
-      <Navbar.Brand href="/">
-        <img
-          src="https://exoplanets.nasa.gov/assets/galaxy_icon.svg"
-          className="mr-3 h-6 sm:h-9"
-          alt="Logo"
-        />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Exoplanets Review
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2 z-50">
-        <NavDropDown items={DROPDOWN_ITEMS} signed_in={signedin} user={USER_MODEL} />
-        <Navbar.Toggle />
-      </div>
-      <MainNav items={NAV_ITEMS}/>
-    </Navbar>
+    <div className="fixed left-0 right-0 z-50">
+      <Navbar fluid={true} rounded={true}>
+        <Navbar.Brand href="/exoplanets-review/">
+          <img
+            src="https://exoplanets.nasa.gov/assets/galaxy_icon.svg"
+            className="mr-3 h-6 sm:h-9"
+            alt="Logo"
+          />
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+            Exoplanets Review
+          </span>
+        </Navbar.Brand>
+        <div className="flex md:order-2 z-50">
+          <NavDropDown
+            items={DROPDOWN_ITEMS}
+            signed_in={signedin}
+            user={USER_MODEL}
+          />
+          <Navbar.Toggle />
+        </div>
+        <MainNav items={NAV_ITEMS} />
+      </Navbar>
+    </div>
   );
 }
 
@@ -132,14 +138,14 @@ const NavDropdownHeader = (props) => {
 
 const NavDropDown = (props) => {
   const isSignedIn = props.signed_in;
-  console.log("NavDropDown", isSignedIn, props.items);
+  //console.log("NavDropDown", isSignedIn, props.items);
   const dropdownItems = props.items.map((item) => {
     if (
       item.show === "always" ||
       (item.show === "signedin" && isSignedIn) ||
       (item.show === "signedout" && !isSignedIn)
     ) {
-      console.log("showing", item.title);
+      //console.log("showing", item.title);
       if (item.divider) {
         return (
           <div key={item.key}>

@@ -1,5 +1,5 @@
 import PlanetView from "../components/planet";
-import AppStates from "../data/app.states";
+import AppData from "../data/app.data";
 import { Table } from "flowbite-react";
 import { Button } from "flowbite-react";
 import { IoMdRocket } from "react-icons/io";
@@ -49,7 +49,7 @@ export default function PlanetPage() {
             rounded-lg bg-gradient-to-t p-[1px] from-green-300 to-orange-500"
             >
               <div className="bg-black rounded-lg w-full h-full p-[1px]">
-                <PlanetTable planet={AppStates.planet} />
+                <PlanetTable planet={AppData.planet} />
               </div>
             </div>
             <div
