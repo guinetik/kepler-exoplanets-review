@@ -13,8 +13,18 @@ const SolarSystemFactory = {
   },
   neptuneLikeColors: ["#30838C", "#44A6A6", "#7AF4FE", "#4681A6", "#2B5F8C"],
   gasGiantColors: ["#734040", "#A67360", "#D9A384", "#8C311C", "#D98825"],
-  terrestrialColors: ["#D8401F", "#982D16", "#4C170B", "#591A0D", "#330F07"],
-  superEarthColors: ["#57E6B6", "#407364", "#5B7338", "#2C7349", "#1D4D2D"],
+  terrestrialColors: ["#ce4436", "#b13230", "#a32e2c", "#ff4847", "#ff6443"],
+  superEarthColors: ["#736048", "#736048", "#627173", "#A9C2D9"],
+  getPlanetColor: (planet, id) => {
+    const planetColors= {
+      "neptune-like": ["#30838C", "#44A6A6", "#7AF4FE", "#4681A6", "#2B5F8C"],
+      "terrestrial": ["#ce4436", "#b13230", "#a32e2c", "#ff4847", "#ff6443"],
+      "super earth":  ["#736048", "#736048", "#627173", "#A9C2D9"],
+      "gas giant": ["#734040", "#A67360", "#D9A384", "#8C311C", "#D98825"],
+    };
+    const query = planet.planet_type.toLowerCase();
+    return planetColors[query][id % planetColors[query].length];
+  },
   getStarColorByStarType(type) {
     return SolarSystemFactory.stellarColors[type]
       ? SolarSystemFactory.stellarColors[type]
@@ -96,17 +106,17 @@ const SolarSystemFactory = {
     */
     switch (exo.planet_type.toLowerCase()) {
       case "neptune-like":
-        console.log(
+        /* console.log(
           "processing Neptune-like...",
           planetCounts.neptuneLike,
           exo.plType,
           exo.pl_radj,
           exo.pl_orbper,
           exo.pl_orbeccen
-        );
+        ); */
         planetCounts.neptuneLike++;
         if ("sub-neptunian" === exo.plType.toLowerCase()) {
-          console.log("rendering sub neptunian");
+          //console.log("rendering sub neptunian");
           // if counter is divisible by 2, then we render a Pluto-like planet
           if (planetCounts.neptuneLike % 2 === 0) {
             return {
@@ -128,7 +138,7 @@ const SolarSystemFactory = {
               type: "planet",
             };
           } else {
-            console.log("rendering pluto-like");
+            //console.log("rendering pluto-like");
             return {
               name: exo.id,
               id: exo.id,
@@ -173,11 +183,11 @@ const SolarSystemFactory = {
         break;
       case "terrestrial":
         planetCounts.terrestrial++;
-        console.log(
+        /* console.log(
           "processing Terrestrial...",
           planetCounts.terrestrial,
           exo.visType
-        );
+        ); */
         return {
           name: exo.id,
           id: exo.id,
@@ -189,7 +199,10 @@ const SolarSystemFactory = {
                   planetCounts.terrestrial %
                     SolarSystemFactory.terrestrialColors.length
                 ]
-              : "#b10000",
+              : SolarSystemFactory.superEarthColors[
+                planetCounts.terrestrial %
+                  SolarSystemFactory.superEarthColors.length
+              ],
           orbitDiameter: 26 * (1 + planetCounts.terrestrial + star.st_rad / 2),
           orbitPeriod: 365 / exo.pl_orbper + 365,
           orbitTilt: -TAU * (exo.pl_orbeccen),
@@ -200,11 +213,11 @@ const SolarSystemFactory = {
         break;
       case "super earth":
         planetCounts.superEarth++;
-        console.log(
+        /* console.log(
           "processing super earth...",
           planetCounts.superEarth,
           exo.visType
-        );
+        ); */
         return {
           name: exo.id,
           id: exo.id,
@@ -213,10 +226,13 @@ const SolarSystemFactory = {
           color:
             exo.visType.toLowerCase() === "lavaatmos"
               ? SolarSystemFactory.terrestrialColors[
-                  planetCounts.terrestrial %
-                    SolarSystemFactory.terrestrialColors.length
+                  planetCounts.superEarth %
+                    SolarSystemFactory.superEarthColors.length
                 ]
-              : "#b10000",
+              : SolarSystemFactory.superEarthColors[
+                planetCounts.superEarth %
+                  SolarSystemFactory.superEarthColors.length
+              ],
           orbitDiameter: 21 * (1 + planetCounts.superEarth + star.st_rad / 2),
           orbitPeriod: 365 / exo.pl_orbper,
           orbitTilt: -TAU * (exo.pl_orbeccen),
@@ -226,16 +242,16 @@ const SolarSystemFactory = {
         };
       case "gas giant":
         planetCounts.gasGiant++;
-        console.log(
+        /* console.log(
           "processing gas giant...",
           planetCounts.gasGiant,
           exo.plType,
           exo.pl_radj,
           exo.pl_orbper
-        );
+        ); */
         if (exo.plType.toLowerCase() === "super-jovian") {
           //rendering a Jupiter-style gass gianet
-          console.log("rendering jupiter style");
+          //console.log("rendering jupiter style");
           return {
             name: exo.id,
             id: exo.id,
@@ -253,7 +269,7 @@ const SolarSystemFactory = {
             type: "planet",
           };
         } else if (exo.plType.toLowerCase() === "jovian") {
-          console.log("rendering ringed planet");
+          //console.log("rendering ringed planet");
           // if it's the second gas giant, we a little ring, like Saturn 🪐
           const planetz = [];
           planetz.push({

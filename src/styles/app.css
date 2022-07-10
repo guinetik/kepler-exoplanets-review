@@ -99,3 +99,11 @@ html {
     @apply block;
   }
 }
+
+@keyframes rotateAnimation {
+	from {transform: rotateY(0deg);}
+	to {transform: rotateY(180deg);}
+}
+.group:hover .group-hover\:animate-spin3d {
+  animation: rotateAnimation 1s linear infinite alternate;
+}

@@ -1,7 +1,7 @@
 export default function ReviewsComponent() {
   return (
-    <div className="pl-2 pr-2 pt-1 w-full h-full">
-      <section className="grid grid-cols-1 gap-5 lg:overflow-y-scroll lg:max-h-[540px]">
+    <div className="pl-2 pr-2 pt-1 w-full h-full bg-black rounded-lg">
+      <section className="grid grid-cols-1 gap-5 xl:overflow-y-scroll xl:max-h-[605px]">
         <ReviewCardComponent />
         <ReviewCardComponent />
         <ReviewCardComponent />
@@ -26,7 +26,6 @@ const ReviewCardComponent = (props) => {
           <p>
             Jese Leos{" "}
             <time
-              datetime="2014-08-16 19:00"
               className="block text-sm text-gray-500 dark:text-gray-400"
             >
               Joined on August 2014
@@ -82,7 +81,7 @@ const ReviewCardComponent = (props) => {
       <footer className="mb-5 text-sm text-gray-500 dark:text-gray-400">
         <p>
           Reviewed in the United Kingdom on{" "}
-          <time datetime="2017-03-03 19:00">March 3, 2017</time>
+          <time>March 3, 2017</time>
         </p>
       </footer>
       <p className="mb-2 font-light text-gray-500 dark:text-gray-400">

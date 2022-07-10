@@ -456,6 +456,74 @@ const AppData = {
     B: "static/B.webp",
     O: "static/O.webp",
   },
+  planetFields: [
+    {
+      id: "pl_hostname",
+      label: "Host Star",
+      description: "The Star hosting this planet",
+      link: "https://en.wikipedia.org/wiki/Planet-hosting_star",
+    }, 
+    {
+      id: "planet_type",
+      label: "Planet Type",
+      description: "A description of the type of the planet",
+      link: "https://en.wikipedia.org/wiki/List_of_planet_types",
+    },
+    {
+      id: "plType",
+      label: "Sub-Type",
+      description: "A description of the planet's visuals, according to NASA.",
+      link: "https://en.wikipedia.org/wiki/List_of_planet_types",
+    },   
+    {
+      id: "mass_display",
+      label: "Mass",
+      description: "A human readable display of the planet's mass",
+      link: "https://en.wikipedia.org/wiki/Planetary_mass",
+    },
+    {
+      id: "period_display",
+      label: "Period",
+      description: "A human readable display of the planet's orbital period",
+      link: "https://en.wikipedia.org/wiki/Orbital_period#:~:text=The%20orbital%20period%20(also%20revolution,other%20stars%2C%20or%20binary%20stars.",
+    },
+    {
+      id: "disc_year",
+      label: "Discovery Year",
+      description: "The year the planet was discovered",
+      link: "https://en.wikipedia.org/wiki/Discoveries_of_exoplanets",
+    },  
+    {
+      id: "pl_discmethod",
+      label: "Discovery Method",
+      description: "Planet's discovery method",
+      link: "https://en.wikipedia.org/wiki/Methods_of_detecting_exoplanets",
+    },  
+    {
+      id: "pl_facility",
+      label: "Facility",
+      description: "The facility that discovered the planet",
+      link: "https://exoplanets.psu.edu/category/facilities/",
+    },  
+    {
+      id: "pl_radj",
+      label: "Radius J",
+      description: "Planet's radius in Jupiter radii",
+      link: "https://en.wikipedia.org/wiki/Jupiter_radius",
+    },  
+    {
+      id: "pl_rade",
+      label: "Radius E",
+      description: "Planet's radius in Earth radii",
+      link: "https://en.wikipedia.org/wiki/Earth_radius",
+    },
+    {
+      id: "pl_orbeccen",
+      label: "Orbital Eccentricity",
+      description: "In astrodynamics, the orbital eccentricity of an astronomical object is a dimensionless parameter that determines the amount by which its orbit around another body deviates from a perfect circle.",
+      link: "https://en.wikipedia.org/wiki/Orbital_eccentricity#:~:text=The%20eccentricity%20of%20Earth's%20orbit,gravitational%20attractions%20among%20the%20planets.",
+    }
+  ],
   getStellarImage: (stellarClass) => {
     return stellarClass in AppData.stellarImages ? AppData.stellarImages[stellarClass] : null;
   },

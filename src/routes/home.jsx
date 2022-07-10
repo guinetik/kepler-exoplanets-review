@@ -4,16 +4,16 @@ import { GrSolaris } from "react-icons/gr";
 import Quote from "../components/quote";
 export default function Home() {
   return (
-    <main className="w-full flex justify-center items-center mb-10">
-      <div className="m-auto mt-12">
+    <main className="w-full flex justify-center items-center h-screen">
+      <div className="md:m-auto">
       <h1
-          className="text-white glow lettering uppercase font-light px-2 mb-8 mt-8 text-center w-full 
-        text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-6xl"
+          className="text-white glow lettering uppercase font-light px-2 mb-8 text-center w-full 
+        text-4xl md:text-5xl lg:text-5xl xl:text-6xl 2xl:text-6xl mt-44 sm:mt-40 md:mt-24 lg:mt-24"
         >
           Welcome to Exoplanets Review
         </h1>
-        <div className="w-full flex items-center justify-center">
-          <div className="container mx-10">
+        <div className="w-full flex items-center justify-center h-scren">
+          <div className="container mx-6 sm:mx-8 md:mx-8 lg:mx-0">
             <div className="w-full rounded-xl bg-gradient-to-b p-[5px] from-cyan-300 to-slate-700">
               <div className="xl:flex">
                 <figure className="bg-slate-600 w-full relative overflow-hidden rounded-tl-xl lg:rounded-bl-none rounded-tr-lg xl:rounded-tr-none xl:rounded-bl-lg">
@@ -60,15 +60,15 @@ export default function Home() {
                       </a>{" "}
                       was used. 
                     </p>
-                    <div className="grid items-center md:grid-cols-2 grid-cols-1 justify-items-stretch md:justify-items-center fluid-button-bar gap-4 my-8 mx-4 lg:mx-10">
+                    <div className="grid items-center md:grid-cols-2 grid-cols-1 justify-items-stretch md:justify-items-center fluid-button-bar gap-4 my-8 mx-4 sm:mx-1 lg:mx-10">
                       <Button
                         href="/exoplanets-review/#/stars/"
                         outline={true}
                         gradientDuoTone="pinkToOrange"
                         size="xl"
                       >
-                        <GrSolaris className="text-xl group-hover:animate-spin transition-all" />
-                        Discover The Stars
+                        <GrSolaris className="text-xl group-hover:animate-spin transition-all" size={28}/>
+                        <span className="sm:text-md md:text-md lg:text-lg">Discover the Stars</span>
                       </Button>
                       <Button
                         href="/exoplanets-review/#/planets/"
@@ -76,8 +76,8 @@ export default function Home() {
                         gradientDuoTone="cyanToBlue"
                         size="xl"
                       >
-                        <IoIosPlanet className="text-xl group-hover:animate-pulse transition-all" />
-                        Featured Planets
+                        <IoIosPlanet className="text-xl group-hover:animate-spin3d transition-all" size={28}/>
+                        <span className="sm:text-md md:text-md lg:text-lg">Featured Planets</span>
                       </Button>
                     </div>
                   </div>

@@ -39,11 +39,11 @@ const NAV_ITEMS = [
     key: "/",
   },
   {
-    title: "Kepler Stars",
+    title: "Stars",
     key: "stars",
   },
   {
-    title: "Kepler Planets",
+    title: "Exoplanets",
     key: "planets",
   },
   {
