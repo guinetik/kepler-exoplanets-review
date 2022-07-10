@@ -1,202 +1,116 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Zdog from "zdog";
+import { Tooltip, Button, Accordion } from "flowbite-react";
+import { useState, useEffect } from "react";
 //
-const { TAU } = Zdog;
-let planetz;
-let zdog_canvas;
-let pause = false;
 let onPlanetMouseOver;
 let onPlanetMouseOut;
 //
 export default function SolarSystem(props) {
-  useEffect(() => {
-    CreateSolarSystem(props.planets);
-    planetz = props.planets;
-  });
-  return (
-    <div className="bg-black rounded-lg w-full h-full relative">
-      <div
-        id="tooltip-default"
-        role="tooltip"
-        className="inline-block opacity-0 absolute z-50 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm transition-opacity duration-300 tooltip dark:bg-gray-700"
-      >
-        <span id="tooltip-title">Tooltip content</span>
-        <div className="tooltip-arrow" data-popper-arrow></div>
-      </div>
-      <div className="absolute bottom-4 left-4 right-4 bg-slate-800 p-2">
-        <aside className="text-xs text-slate-500">
-          Hypothetical Visualization. Orbits not to scale.
-          <br />
-          Star color infered from star type. Planet sizes proportional to planet's radius in Jupiter units.
-          Planet orbital duration proportional to orbital period in days and orbital tilt proportinal
-          to orbit's real eccentricity. Planet colors infered from planet type and visualization type provided by NASA.
-        </aside>
-      </div>
-      <PlanetaryBodies planets={props.planets}></PlanetaryBodies>
-      <canvas
-        id="canvas"
-        className="w-full h-full block cursor-move absolute"
-      ></canvas>
-    </div>
-  );
-}
-
-const PlanetaryBodies = (props) => {
-  const onPlanetBodyOver = (e) => {
-    onPlanetMouseOver(e.relatedTarget.dataset.planet);
-  };
-  //
-  const onPlanetBodyOut = (e) => {
-    onPlanetMouseOut();
-  };
-  //
-  let pbodies = props.planets.map((planet) => {
-    let link;
-    let className;
-    switch (planet.type) {
-      case "star":
-        link = "/star/" + planet.id;
-        className =
-          "text-orange-500 hover:text-white active:text-white transition-all";
-        break;
-      case "moon":
-        link = "/planets/" + planet.id;
-        className =
-          "text-blue-500 hover:text-white active:text-white transition-all";
-        break;
-      default:
-        link = "/planets/" + planet.id;
-        className =
-          "text-green-500 hover:text-white active:text-white transition-all";
-        break;
-    }
-    if (planet.displayName) {
-      return (
-        <li key={planet.name} data-planet={planet.name}>
-          <Link
-            data-planet={planet.name}
-            onMouseOver={onPlanetBodyOver}
-            onMouseOut={onPlanetBodyOut}
-            key={link}
-            className={className}
-            style={{ color: planet.color }}
-            to={link}
-          >
-            {planet.displayName}
-          </Link>
-        </li>
-      );
-    }
-    return null;
-  });
-  return (
-    <div className="rounded-lg, bg-slate-900 bg-opacity-50 w-auto absolute h-auto z-10 p-4">
-      <h2 className="text-white lettering font-light">PLANETARY BODIES</h2>
-      <ul className="text-white">{pbodies}</ul>
-    </div>
-  );
-};
-/* 
-Inspired by https://codepen.io/tiencoffee/pen/OePgEg
+  const { TAU } = Zdog;
+  let planetz = [];
+  let zdog_canvas;
+  let pause = false;
+  /* 
+  Inspired by https://codepen.io/tiencoffee/pen/OePgEg
  */
-const CreateSolarSystem = (solarSystem) => {
-  //console.log("creating solar system");
-  let isSpinning = true;
-  let selectedPlanet = null;
-  let illo = new Zdog.Illustration({
-    element: "#canvas",
-    dragRotate: true,
-    resize: true,
-    rotate: {
-      y: TAU * 0.4,
-      x: -TAU / 10,
-    },
-    onDragStart: () => {
-      isSpinning = false;
-    },
-    onDragEnd: function () {
-      isSpinning = true;
-    },
-    onResize: function (width) {
-      //this.zoom = innerWidth / 115;
-      if (this.zoom < 10) this.zoom = 10;
-    },
-  });
-  for (let planet of solarSystem) {
-    // console.log("planet", planet);
-    let parentBody = planet.satelliteOf
-      ? solarSystem.filter((p) => p.name === planet.satelliteOf)[0].planet
-      : illo;
-    //console.log("parent", parentBody);
-    //
-    planet.anchor = new Zdog.Anchor({
-      addTo: parentBody,
-      translate: {
-        z: planet.orbitTranslateZ,
-      },
+  const CreateSolarSystem = (solarSystem) => {
+    //console.log("creating solar system");
+    let isSpinning = true;
+    let selectedPlanet = null;
+    let illo = new Zdog.Illustration({
+      element: "#canvas",
+      dragRotate: true,
+      resize: true,
       rotate: {
-        y: planet.orbitNode,
-        z: planet.orbitTilt,
+        y: TAU * 0.4,
+        x: -TAU / 10,
+      },
+      onDragStart: () => {
+        isSpinning = false;
+      },
+      onDragEnd: function () {
+        isSpinning = true;
+      },
+      onResize: function (width) {
+        //this.zoom = innerWidth / 115;
+        if (this.zoom < 10) this.zoom = 10;
       },
     });
-    //
-    planet.orbitAnchor = new Zdog.Anchor({
-      addTo: planet.anchor,
-    });
-    //
-    if (!planet.ring) planet.ring = 1;
-    planet.orbits = [];
-    if (planet.orbitDiameter > 0) {
-      for (let i = 0; i < planet.ring; i++) {
-        const orbit = new Zdog.Ellipse({
+    for (let planet of solarSystem) {
+      // console.log("planet", planet);
+      let parentBody = planet.satelliteOf
+        ? solarSystem.filter((p) => p.name === planet.satelliteOf)[0].planet
+        : illo;
+      //console.log("parent", parentBody);
+      //
+      planet.anchor = new Zdog.Anchor({
+        addTo: parentBody,
+        translate: {
+          z: planet.orbitTranslateZ,
+        },
+        rotate: {
+          y: planet.orbitNode,
+          z: planet.orbitTilt,
+        },
+      });
+      //
+      planet.orbitAnchor = new Zdog.Anchor({
+        addTo: planet.anchor,
+      });
+      //
+      if (!planet.ring) planet.ring = 1;
+      planet.orbits = [];
+      if (planet.orbitDiameter > 0) {
+        for (let i = 0; i < planet.ring; i++) {
+          const orbit = new Zdog.Ellipse({
+            addTo: planet.orbitAnchor,
+            diameter: planet.orbitDiameter + i * 0.3,
+            quarters: 4,
+            rotate: {
+              x: TAU / 4,
+            },
+            stroke: planet.name === "sun" ? 0 : 0.1,
+            color: "#fff3",
+          });
+          orbit.name = planet.name;
+          planet.orbits.push(orbit);
+        }
+      }
+      if (planet.ring == 1) {
+        planet.planet = new Zdog.Shape({
           addTo: planet.orbitAnchor,
-          diameter: planet.orbitDiameter + i * 0.3,
-          quarters: 4,
-          rotate: {
-            x: TAU / 4,
+          translate: {
+            x: planet.orbitDiameter / 2,
           },
-          stroke: planet.name === "sun" ? 0 : 0.1,
-          color: "#fff3",
+          stroke: planet.diameter,
+          color: planet.color,
+          name: planet.name,
         });
-        orbit.name = planet.name;
-        planet.orbits.push(orbit);
+        planet.planet.name = planet.name;
+      }
+      if (planet.starColor) {
+        planet.light = new Zdog.Shape({
+          addTo: planet.orbitAnchor,
+          translate: {
+            x: planet.orbitDiameter / 2,
+          },
+          stroke: planet.diameter + planet.starLight,
+          color: planet.starColor,
+          name: planet.name,
+        });
+        planet.light.name = planet.name;
       }
     }
-    if (planet.ring == 1) {
-      planet.planet = new Zdog.Shape({
-        addTo: planet.orbitAnchor,
-        translate: {
-          x: planet.orbitDiameter / 2,
-        },
-        stroke: planet.diameter,
-        color: planet.color,
-        name: planet.name,
-      });
-      planet.planet.name = planet.name;
-    }
-    if (planet.starColor) {
-      planet.light = new Zdog.Shape({
-        addTo: planet.orbitAnchor,
-        translate: {
-          x: planet.orbitDiameter / 2,
-        },
-        stroke: planet.diameter + planet.starLight,
-        color: planet.starColor,
-        name: planet.name,
-      });
-      planet.light.name = planet.name;
-    }
-  }
-  //
-  let n = 0;
-  animate(solarSystem, illo);
-  zdog_canvas = illo;
-  /* 
+    //
+    let n = 0;
+    animate(solarSystem, illo);
+    zdog_canvas = illo;
+    /* 
   Interactivity inspired from https://codepen.io/gregja/pen/rEGmGB 
   */
-  const canvas_visible = document.getElementById("canvas");
-  /* const tool_tip = document.getElementById("tooltip-default");
+    const canvas_visible = document.getElementById("canvas");
+    /* const tool_tip = document.getElementById("tooltip-default");
   //
   const getMousePos = function (canvas, evt) {
     // It's a very reliable algorithm to get mouse coordinates (don't use anything else)
@@ -270,71 +184,170 @@ const CreateSolarSystem = (solarSystem) => {
       resetCanvas();
     }
   } */
-  function resetCanvas() {
-    if (pause) {
-      pause = false;
-      animate();
-      canvas_visible.classList.add("cursor-move");
-      canvas_visible.classList.remove("cursor-pointer");
+    function resetCanvas() {
+      if (pause) {
+        pause = false;
+        animate();
+        canvas_visible.classList.add("cursor-move");
+        canvas_visible.classList.remove("cursor-pointer");
+      }
+      if (selectedPlanet) {
+        selectedPlanet.color = selectedPlanet.originalColor;
+        selectedPlanet = null;
+      }
     }
-    if (selectedPlanet) {
-      selectedPlanet.color = selectedPlanet.originalColor;
-      selectedPlanet = null;
-    }
-  }
-  //
-  onPlanetMouseOver = (p) => {
-    let k = solarSystem.filter((pl) => p === pl.name);
-    if (k && k.length > 0) {
-      const planet = k[0].planet;
-      // console.log("onPlanetMouseOver", planet.color, planet.originalColor);
-      planet.originalColor = planet.color;
-      planet.color = "#FFF";
-      planet.originalStroke = planet.stroke;
-      planet.stroke = planet.originalStroke + planet.originalStroke * 0.5;
-      //console.log("planet", planet.addTo);
-      //tool_tip.style.left = left + 20 + "px";
-      //tool_tip.style.top = top + 100 + "px";
-      // console.log("onPlanetMouseOver", planet.color, planet.originalColor);
-      //tool_tip.classList.remove("opacity-0");
-      document.getElementById("tooltip-title").innerHTML = planet.name;
+    //
+    onPlanetMouseOver = (p) => {
+      let k = solarSystem.filter((pl) => p === pl.name);
+      if (k && k.length > 0) {
+        const planet = k[0].planet;
+        // console.log("onPlanetMouseOver", planet.color, planet.originalColor);
+        planet.originalColor = planet.color;
+        planet.color = "#FFF";
+        planet.originalStroke = planet.stroke;
+        planet.stroke = planet.originalStroke + planet.originalStroke * 0.5;
+        //console.log("planet", planet.addTo);
+        //tool_tip.style.left = left + 20 + "px";
+        //tool_tip.style.top = top + 100 + "px";
+        // console.log("onPlanetMouseOver", planet.color, planet.originalColor);
+        //tool_tip.classList.remove("opacity-0");
+        document.getElementById("tooltip-title").innerHTML = planet.name;
+        if (selectedPlanet) {
+          selectedPlanet.color = selectedPlanet.originalColor;
+          selectedPlanet.stroke = selectedPlanet.originalStroke;
+        }
+        selectedPlanet = planet;
+        pause = true;
+      }
+    };
+    //
+    onPlanetMouseOut = () => {
       if (selectedPlanet) {
         selectedPlanet.color = selectedPlanet.originalColor;
         selectedPlanet.stroke = selectedPlanet.originalStroke;
+        selectedPlanet = null;
+        pause = false;
+        animate(solarSystem, illo);
+        //tool_tip.classList.add("opacity-0");
       }
-      selectedPlanet = planet;
-      pause = true;
-    }
+    };
+    //
+    let context_visible = canvas_visible.getContext("2d");
+    //canvas_visible.addEventListener("click", shapeClicked, false);
+    //canvas_visible.addEventListener("mousemove", onMouseMove, false);
+    //canvas_visible.addEventListener("mouseleave", resetCanvas, false);
   };
-  //
-  onPlanetMouseOut = () => {
-    if (selectedPlanet) {
-      selectedPlanet.color = selectedPlanet.originalColor;
-      selectedPlanet.stroke = selectedPlanet.originalStroke;
-      selectedPlanet = null;
-      pause = false;
-      animate(solarSystem, illo);
-      //tool_tip.classList.add("opacity-0");
+  function animate(solarSystem, illo) {
+    for (let planet of solarSystem) {
+      planet.orbitAnchor.rotate.y -= TAU / planet.orbitPeriod / 5;
+      if (planet.satelliteOf && planet.satelliteOf != "sun") {
+        planet.anchor.rotate.y +=
+          TAU /
+          solarSystem.filter((p) => p.name === planet.satelliteOf)[0]
+            .orbitPeriod /
+          5;
+      }
     }
-  };
-  //
-  let context_visible = canvas_visible.getContext("2d");
-  //canvas_visible.addEventListener("click", shapeClicked, false);
-  //canvas_visible.addEventListener("mousemove", onMouseMove, false);
-  //canvas_visible.addEventListener("mouseleave", resetCanvas, false);
-};
-function animate(solarSystem, illo) {
-  for (let planet of solarSystem) {
-    planet.orbitAnchor.rotate.y -= TAU / planet.orbitPeriod / 5;
-    if (planet.satelliteOf && planet.satelliteOf != "sun") {
-      planet.anchor.rotate.y +=
-        TAU /
-        solarSystem.filter((p) => p.name === planet.satelliteOf)[0]
-          .orbitPeriod /
-        5;
-    }
+    //if (isSpinning) illo.rotate.y += 0.01;
+    illo.updateRenderGraph();
+    if (!pause) requestAnimationFrame(() => animate(solarSystem, illo));
   }
-  //if (isSpinning) illo.rotate.y += 0.01;
-  illo.updateRenderGraph();
-  if (!pause) requestAnimationFrame(() => animate(solarSystem, illo));
+  //
+  const [planets, setPlanets] = useState([]);
+  useEffect(() => {
+    if ((planetz.length = 0)) {
+      planetz = props.planets;
+      setPlanets(props.planets);
+    }
+    if (!zdog_canvas) CreateSolarSystem(props.planets);
+  }, [planets]);
+  return (
+    <div className="bg-black rounded-lg w-full h-full relative overflow-hidden">
+      <div className="absolute bottom-4 left-4 right-4 z-50">
+        <Tooltip
+          content="This is an hypothetical visualization of the planetary system. Orbits not to scale.
+          Star color infered from star type. Planet sizes proportional to
+          planet's radius in Jupiter units. Planet orbital duration proportional
+          to orbital period in days and orbital tilt proportinal to orbit's real
+          eccentricity. Planet colors infered from planet type and visualization
+          type provided by NASA."
+          trigger="click"
+        >
+          <Button size="xs" pill={true} color="dark">
+            What is this?
+          </Button>
+        </Tooltip>
+      </div>
+      <PlanetaryBodies planets={props.planets}></PlanetaryBodies>
+      <canvas
+        id="canvas"
+        className="w-full h-full block cursor-move absolute"
+      ></canvas>
+    </div>
+  );
 }
+
+const PlanetaryBodies = (props) => {
+  const onPlanetBodyOver = (e) => {
+    //onPlanetMouseOver(e.relatedTarget.dataset.planet);
+  };
+  //
+  const onPlanetBodyOut = (e) => {
+    //onPlanetMouseOut();
+  };
+  //
+  let pbodies = props.planets.map((planet) => {
+    let link;
+    let className;
+    switch (planet.type) {
+      case "star":
+        link = "/star/" + planet.id;
+        className =
+          "text-orange-500 hover:text-white active:text-white transition-all";
+        break;
+      case "moon":
+        link = "/planets/" + planet.id;
+        className =
+          "text-blue-500 hover:text-white active:text-white transition-all";
+        break;
+      default:
+        link = "/planets/" + planet.id;
+        className =
+          "text-green-500 hover:text-white active:text-white transition-all";
+        break;
+    }
+    if (planet.displayName) {
+      return (
+        <li key={planet.name} data-planet={planet.name}>
+          <Link
+            data-planet={planet.name}
+            onMouseOver={onPlanetBodyOver}
+            onMouseOut={onPlanetBodyOut}
+            key={link}
+            className={className}
+            style={{ color: planet.color }}
+            to={link}
+          >
+            {planet.displayName}
+          </Link>
+        </li>
+      );
+    }
+    return null;
+  });
+  return (
+    <div className="rounded-lg, absolute z-10 p-4 h-auto lg:h-full">
+      <Accordion alwaysOpen={true}>
+        <Accordion.Panel>
+          <Accordion.Title>Planetary Bodies</Accordion.Title>
+          <Accordion.Content>
+            <ul className="text-white">{pbodies}</ul>
+            <aside className="text-sm text-slate-300 mt-2">
+              Click to visit a planet
+            </aside>
+          </Accordion.Content>
+        </Accordion.Panel>
+      </Accordion>
+    </div>
+  );
+};

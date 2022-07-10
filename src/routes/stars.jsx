@@ -22,6 +22,7 @@ export default function StarsPage() {
       getData();
     }
   };
+  window.scrollTo({ top: 0, behavior: "smooth" });
   //
   return (
     <main className="w-full flex justify-center items-center">
@@ -52,7 +53,7 @@ export default function StarsPage() {
 }
 const StarCard = (props) => {
   return (
-    <div className="flex flex-col h-full w-full rounded-lg overflow-hidden bg-gradient-to-b p-[1px] from-orange-500 to-purple-500">
+    <div className="min-w-[285px] flex flex-col h-full w-full rounded-lg overflow-hidden bg-gradient-to-b p-[1px] from-orange-500 to-purple-500">
       <img
         className="lg:h-48 md:h-36 w-full object-cover object-center rounded-tl-lg rounded-tr-lg"
         src={AppData.getStellarImage(props.star.starType)}
@@ -75,34 +76,33 @@ const StarCard = (props) => {
           </span>{" "}
           from Earth.
         </h2>
-        <div className="flex items-center flex-wrap ">
+        <div className="flex items-center justify-between">
           <Button
             href={"/exoplanets-review/#/stars/" + props.star.id}
             outline={true}
-            className="group"
             gradientDuoTone="cyanToBlue"
             size="lg"
           >
-            <IoMdRocket className="text-xl group-hover:bounce_y transition-all" />
-            Visit Star
+            <IoMdRocket className="text-xl group-hover:animate-bounce_y transition-all" />
+            <span className="sm:text-md md:text-md lg:text-lg">Visit Star</span>
           </Button>
-          <span
-            title={"Star Type: " + props.star.starType}
-            className="text-purple-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200"
-          >
-            <MdOutlineClass className="text-xl"></MdOutlineClass>
-            <aside className="ml-2">
-              {"Star Type: " + props.star.starType}
-            </aside>
-          </span>
-          <span
-            title="Planets"
-            className="text-green-400 inline-flex items-center leading-none text-sm"
-            alt="Planets"
-          >
-            <BiPlanet className="text-xl"></BiPlanet>
-            <aside className="ml-2">{props.star.planets.length || 0}</aside>
-          </span>
+          <div>
+            <span
+              title={"Star Type: " + props.star.starType}
+              className="text-purple-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200"
+            >
+              <MdOutlineClass className="text-xl"></MdOutlineClass>
+              <aside className="ml-2">{props.star.starType}</aside>
+            </span>
+            <span
+              title="Planets"
+              className="text-green-400 inline-flex items-center leading-none text-sm"
+              alt="Planets"
+            >
+              <BiPlanet className="text-xl"></BiPlanet>
+              <aside className="ml-2">{props.star.planets.length || 0}</aside>
+            </span>
+          </div>
         </div>
       </div>
     </div>
