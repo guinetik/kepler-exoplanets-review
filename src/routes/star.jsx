@@ -45,9 +45,9 @@ export default function Star() {
             >
               <div
                 className="col-span-1 xl:col-span-3 2xl:col-span-3
-              min-h-[500px]
-              h-[calc(100vh-15rem)]
-            rounded-lg bg-gradient-to-tr p-[1px] from-cyan-300 to-fuchsia-500"
+                h-[calc(50vh)]
+              xl:h-[calc(100vh-15rem)]
+            rounded-lg bg-gradient-to-tr p-0.5 from-cyan-300 to-fuchsia-500"
               >
                 <div className="w-full h-full relative">
                   {solarSystem && (
@@ -57,7 +57,7 @@ export default function Star() {
               </div>
               <div
                 className="col-span-1 xl:col-span-2 2xl:col-span-2 overflow-hidden
-              h-full rounded-lg bg-gradient-to-tr p-[1px] from-cyan-300 to-fuchsia-500"
+              h-full rounded-lg bg-gradient-to-tr p-0.5 from-cyan-300 to-fuchsia-500"
               >
                 <StarTable star={star} />
               </div>
@@ -76,7 +76,12 @@ const StarTable = (props) => {
     return (
       <Table.Row key={field.id}>
         <Table.Cell className="whitespace-nowrap text-sm text-slate-300 font-bold">
-          <a title={field.description} href={field.link} className="hover:text-cyan-500" target="_blank">
+          <a
+            title={field.description}
+            href={field.link}
+            className="hover:text-cyan-500"
+            target="_blank"
+          >
             {field.label}
             <TiInfoLarge className="inline -mt-3" size={14} />
           </a>

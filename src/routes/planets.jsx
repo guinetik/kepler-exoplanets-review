@@ -5,7 +5,7 @@ import { IoMdRocket } from "react-icons/io";
 import { GrSolaris } from "react-icons/gr";
 import { useState } from "react";
 import { Button } from "flowbite-react";
-import "../data/typef"
+import "../data/types"
 export default function PlanetPage() {
   /* todo: add infinite scrolling here */
   const itemsPerPage = 300;
@@ -43,7 +43,7 @@ export default function PlanetPage() {
 const PlanetCard = (props) => {
   //console.log("PlanetCard", props.planet);
   return (
-    <div className="min-w-[285px] flex flex-col h-full w-full rounded-lg overflow-hidden bg-gradient-to-b p-[1px] from-cyan-500 to-green-500">
+    <div className="min-w-[285px] flex flex-col h-full w-full rounded-lg overflow-hidden bg-gradient-to-b p-0.5 from-cyan-500 to-green-500">
       <img
         className="lg:h-80 md:h-60 w-full object-cover object-center rounded-tl-lg rounded-tr-lg"
         src={"https://exoplanets.nasa.gov" + props.planet.list_image}

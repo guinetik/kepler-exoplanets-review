@@ -1,4 +1,4 @@
-import "./typef"
+import "./types"
 import Zdog from "zdog";
 const { TAU } = Zdog;
 const SolarSystemFactory = {
@@ -42,7 +42,7 @@ const SolarSystemFactory = {
    * @returns {Array<StellarBody>} - An array of stellar bodies of the solar system
    */
   generate: function (star, exoplanets) {
-    console.log("star_radius", star.st_rad);
+    //console.log("star_radius", star.st_rad);
     const solarSystem = [
       {
         name: star.id,

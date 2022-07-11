@@ -1,4 +1,4 @@
-// the column names for the API are impossible to remember 
+// the column names for the API are impossible to remember
 // so I'm creating this typedef doc to help me with Intelisense on the fields
 // https://exoplanetarchive.ipac.caltech.edu/docs/API_PS_columns.html
 /**
@@ -85,4 +85,39 @@
  * @property {string} orbitTranslateZ - The angle to translate the stellar body in Z rotation
  * @property {string} satelliteOf - Which other sterllar body of the solar system to anchor this body to
  * @property {string} type - the type of stellar body "star" or "planet"
+ */
+/**
+ * @typedef PlanetReviews
+ * @type {object}
+ * @property {string} id - id of the Review
+ * @property {Date} date - Date the review as posted
+ * @property {string} planet - A reference to the planet's ID
+ * @property {number} rate - The rating of the review
+ * @property {string} title - The title of the review
+ * @property {string} text - The text of the review
+ * @property {number} userid - A reference to the user's ID
+ */
+/**
+ * @typedef User
+ * @type {object}
+ * @property {string} uid - id of the User
+ * @property {string} authProvider - Where the user was crated from
+ * @property {string} name - User's name
+ * @property {number} email - User's email
+ * @property {string} avatar - The text of the review
+ */
+/**
+ * @typedef { import("firebase/firestore").QueryConstraint} QueryConstraint
+ */
+/**
+ * @typedef { import("firebase/firestore").Query } Query
+ */
+/**
+ * @typedef { import("firebase/firestore").CollectionReference } CollectionReference
+ */
+/**
+ * @typedef { import("firebase/firestore").QuerySnapshot } QuerySnapshot
+ */
+/**
+ * @typedef { import("firebase/app").FirebaseApp } FirebaseApp
  */

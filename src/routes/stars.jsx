@@ -53,7 +53,7 @@ export default function StarsPage() {
 }
 const StarCard = (props) => {
   return (
-    <div className="min-w-[285px] flex flex-col h-full w-full rounded-lg overflow-hidden bg-gradient-to-b p-[1px] from-orange-500 to-purple-500">
+    <div className="min-w-[285px] flex flex-col h-full w-full rounded-lg overflow-hidden bg-gradient-to-b p-0.5 from-orange-500 to-purple-500">
       <img
         className="lg:h-48 md:h-36 w-full object-cover object-center rounded-tl-lg rounded-tr-lg"
         src={AppData.getStellarImage(props.star.starType)}

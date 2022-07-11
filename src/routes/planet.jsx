@@ -1,6 +1,7 @@
 import { Table } from "flowbite-react";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
+import { AuthContext } from "../data/context";
 import AppData from "../data/app.data";
 import PlanetView from "../components/planet";
 import { TiInfoLarge } from "react-icons/ti";
@@ -8,23 +9,32 @@ import ReviewsComponent from "../components/reviews";
 import { Button } from "flowbite-react";
 import { MdOutlineRateReview } from "react-icons/md";
 import { BiPlanet } from "react-icons/bi";
+import FirebaseData from "../data/firebase.data";
+import { ReviewModal } from "../components/modals";
 //
 export default function PlanetPage() {
+  const childRef = useRef();
+  //
+  const params = useParams();
+  const planetId = params.planet_id;
+  /**
+   * Controls the modal
+   */
+  const [isModalOpen, setModalOpen] = useState(false);
+  /**
+   * Hooking up to the user's context
+   */
+  const { user } = useContext(AuthContext);
   //
   /**
-   * flowbite-react doesnt expose a target attribute on the Button component. 
+   * flowbite-react doesnt expose a target attribute on the Button component.
    * so we hack the click and prevent default to then call window API to open url on a new tab
    * @param {MouseEvent} e - the event to override
    */
   const openLinkNewTab = (e) => {
     e.preventDefault();
-    window.open(
-      "https://exoplanets.nasa.gov" + planet.url,
-      "_newtab"
-    );
+    window.open("https://exoplanets.nasa.gov" + planet.url, "_newtab");
   };
-  const params = useParams();
-  const planetId = params.planet_id;
   /**
    * @type {Array<Planet>}
    */
@@ -33,6 +43,14 @@ export default function PlanetPage() {
    * @type {Array<Boolean>}
    */
   const [loading, setLoading] = useState(true);
+  const openCreateReviewModal = (e) => {
+    e.preventDefault();
+    if (user) {
+      setModalOpen(true);
+    } else {
+      FirebaseData.messageHandler("Please login to leave a review");
+    }
+  };
   useEffect(() => {
     async function fetchData() {
       /**
@@ -51,6 +69,15 @@ export default function PlanetPage() {
   }, [planet]);
   return (
     <main className="w-full flex justify-center items-center">
+      <ReviewModal
+        show={isModalOpen}
+        user={user}
+        planet_id={planetId}
+        onClose={() => {
+          setModalOpen(false);
+          childRef.current.refresh();
+        }}
+      />
       {!loading && planet && (
         <section className="w-full h-full m-auto mt-14">
           <header className="bg-black  bg-opacity-50">
@@ -63,7 +90,7 @@ export default function PlanetPage() {
                 />
                 <div className="z-10 w-full flex items-center justify-center absolute -bottom-40">
                   <div className="shadow-xl rounded-full w-80 h-80 overflow-hidden bg-black border-2 border-slate-800 bg-opacity-50">
-                    <PlanetView planet={planet}/>
+                    <PlanetView planet={planet} />
                   </div>
                 </div>
               </div>
@@ -94,8 +121,9 @@ export default function PlanetPage() {
                     </p>
                     <div className="grid items-center grid-cols-1 justify-items-stretch fluid-button-bar gap-4 my-4 mx-4">
                       <Button
-                        href="#"
+                        href="/exoplanets-review/reviews/create"
                         outline={true}
+                        onClick={openCreateReviewModal}
                         gradientDuoTone="pinkToOrange"
                         size="xl"
                       >
@@ -122,13 +150,13 @@ export default function PlanetPage() {
                 </div>
                 <div className="bg-gradient-to-b from-cyan-500 to-green-500 p-1 rounded-lg overflow-hidden md:col-span-2 lg:col-span-2 xl:col-span-2 2xl:col-span-2">
                   <div className="bg-black rounded-lg overflow-hidden h-full p-2">
-                  <h2
-              className="text-center w-full text-cyan-500
+                    <h2
+                      className="text-center w-full text-cyan-500
             text-xl md:text-2xl lg:text-3xl xl:text-3xl 2xl:text-4xl italic"
-            >
-             Planet Reviews
-            </h2>
-                    <ReviewsComponent />
+                    >
+                      Planet Reviews
+                    </h2>
+                    <ReviewsComponent planet_id={planetId} ref={childRef} />
                   </div>
                 </div>
               </article>

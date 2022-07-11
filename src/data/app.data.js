@@ -2,7 +2,7 @@
   To simplify state transitions, I'm creating this "master" js file that will have all available states for the app.
   Components will reference AppState to get props and we'll need to manage this object as data gets loaded in.
  */
-import "./typef"
+import "./types";
 import Zdog from "zdog";
 import SolarSystemFactory from "./solarsystem.factory";
 //
@@ -251,12 +251,60 @@ const SOLAR_SYSTEM = [
   },
 ];
 const AppData = {
+  nav: {
+    main: [
+      {
+        title: "Home",
+        key: "/",
+      },
+      {
+        title: "Stars",
+        key: "stars",
+      },
+      {
+        title: "Exoplanets",
+        key: "planets",
+      },
+      {
+        title: "Pic of the Day",
+        key: "apod",
+      },
+      {
+        title: "About",
+        key: "about",
+      },
+    ],
+    dropdown: [
+      {
+        title: "Random Planet",
+        key: "/",
+        show: "always",
+      },
+      {
+        title: "Account",
+        key: "account",
+        show: "signedin",
+      },
+      {
+        title: "My Reviews",
+        key: "my-reviews",
+        show: "signedin",
+      },
+      {
+        title: "Sign Out",
+        key: "signout",
+        show: "signedin",
+        divider: true,
+      },
+    ],
+  },
   solarSystem: SOLAR_SYSTEM,
   stars: [],
   exoplanets: [],
-  star: null,
-  planet: { data: PLANET_DATA },
-  loading: null,
+  loading:true,
+  setLoading: (loading) => {
+    AppData.loading = loading;
+  },
   //https://astronomy.com/magazine/glenn-chaple/2021/04/color-coding-stars
   stellarFields: [
     {
@@ -269,181 +317,181 @@ const AppData = {
       id: "starType",
       label: "Star Type",
       description: "Star Type according to the XXX scale",
-      link:"https://en.wikipedia.org/wiki/Stellar_classification"
+      link: "https://en.wikipedia.org/wiki/Stellar_classification",
     },
     {
       id: "constellation",
       label: "Constellation",
       description: "Constellation this star is part of",
-      link: "https://en.wikipedia.org/wiki/Constellation"
+      link: "https://en.wikipedia.org/wiki/Constellation",
     },
     {
       id: "disc_year",
       label: "Discovery Year",
       description: "The year the star was discovered",
-      link: "https://en.wikipedia.org/wiki/History_of_astronomy"
+      link: "https://en.wikipedia.org/wiki/History_of_astronomy",
     },
     {
       id: "sy_snum",
       label: "Number of Stars",
       description: "Number of stars in the planetary system",
-      link:"https://en.wikipedia.org/wiki/Star"
+      link: "https://en.wikipedia.org/wiki/Star",
     },
     {
       id: "sy_pnum",
       label: "Number of Planets",
       description: "Number of planets in the planetary system",
-      link: "https://en.wikipedia.org/wiki/Planet"
+      link: "https://en.wikipedia.org/wiki/Planet",
     },
     {
       id: "sy_mnum",
       label: "Number of Moons",
       description: "Number of moons in the planetary system",
-      link: "https://en.wikipedia.org/wiki/Moon"
+      link: "https://en.wikipedia.org/wiki/Moon",
     },
     {
       id: "st_teff",
       label: "Stellar Effective Temperature [K]",
       description:
         "Temperature of the star as modeled by a black body emitting the same total amount of electromagnetic radiation",
-        link:"https://en.wikipedia.org/wiki/Stellar_classification"
+      link: "https://en.wikipedia.org/wiki/Stellar_classification",
     },
     {
       id: "st_rad",
       label: "Stellar Radius [Solar Radius]",
       description:
         "Length of a line segment from the center of the star to its surface, measured in units of radius of the Sun",
-        link:"https://en.wikipedia.org/wiki/Solar_radius"
+      link: "https://en.wikipedia.org/wiki/Solar_radius",
     },
     {
       id: "st_mass",
       label: "Stellar Mass [Solar mass]",
       description:
         "Amount of matter contained in the star, measured in units of masses of the Sun",
-        link:"https://en.wikipedia.org/wiki/Stellar_mass"
+      link: "https://en.wikipedia.org/wiki/Stellar_mass",
     },
     {
       id: "rastr",
       label: "RA [sexagesimal]",
       description:
         "Right Ascension of the planetary system in sexagesimal format",
-        link:"https://en.wikipedia.org/wiki/Right_ascension"
+      link: "https://en.wikipedia.org/wiki/Right_ascension",
     },
     {
       id: "decstr",
       label: "Dec [sexagesimal]",
       description:
         "Declination of the planetary system in sexagesimal notation",
-        link:"https://en.wikipedia.org/wiki/Declination",
+      link: "https://en.wikipedia.org/wiki/Declination",
     },
     {
       id: "sy_dist",
       label: "Distance [pc]",
       description: "Distance to the planetary system in units of parsecs",
-      link:"https://pt.wikipedia.org/wiki/Parsec"
+      link: "https://pt.wikipedia.org/wiki/Parsec",
     },
     {
       id: "sy_plx",
       label: "Parallax [mas]",
       description:
         "Difference in the angular position of a star as measured at two opposite positions within the Earth's orbit",
-        link:"https://en.wikipedia.org/wiki/Stellar_parallax"
+      link: "https://en.wikipedia.org/wiki/Stellar_parallax",
     },
     {
       id: "elat",
       label: "Ecliptic Latitude [deg]",
       description:
         "Ecliptic latitude of the planetary system in units of decimal degrees",
-        link:"https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0."
+      link: "https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0.",
     },
     {
       id: "elon",
       label: "Ecliptic Longitude [deg]",
       description:
         "Ecliptic longitude of the planetary system in units of decimal degrees",
-        link:"https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0."
+      link: "https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0.",
     },
     {
       id: "glat",
       label: "Galactic Latitude [deg]",
       description:
         "Galactic latitude of the planetary system in units of decimal degrees",
-        link:"https://en.wikipedia.org/wiki/Galactic_coordinate_system"
+      link: "https://en.wikipedia.org/wiki/Galactic_coordinate_system",
     },
     {
       id: "glon",
       label: "Galactic Longitude [deg]",
       description:
         "Galactic longitude of the planetary system in units of decimal degrees",
-        link:"https://en.wikipedia.org/wiki/Galactic_coordinate_system"
+      link: "https://en.wikipedia.org/wiki/Galactic_coordinate_system",
     },
     {
       id: "sy_pmra",
       label: "Proper Motion (RA) [mas/yr]",
       description:
         "Angular change in right ascension over time as seen from the center of mass of the Solar System",
-        link:"https://en.wikipedia.org/wiki/Proper_motion"
+      link: "https://en.wikipedia.org/wiki/Proper_motion",
     },
     {
       id: "sy_pmdec",
       label: "Proper Motion (Dec) [mas/yr]",
       description:
         "Angular change in declination over time as seen from the center of mass of the Solar System",
-        link:"https://en.wikipedia.org/wiki/Proper_motion"
+      link: "https://en.wikipedia.org/wiki/Proper_motion",
     },
     {
       id: "sy_tmag",
       label: "TESS Magnitude",
       description:
         "Brightness of the host star as measured using the TESS bandpass, in units of magnitudes",
-        link:"https://en.wikipedia.org/wiki/Transiting_Exoplanet_Survey_Satellite"
+      link: "https://en.wikipedia.org/wiki/Transiting_Exoplanet_Survey_Satellite",
     },
     {
       id: "sy_pm",
       label: "Total Proper Motion [mas/yr]",
       description:
         "Angular change in position over time as seen from the center of mass of the Solar System",
-        link:"https://en.wikipedia.org/wiki/Proper_motion"
+      link: "https://en.wikipedia.org/wiki/Proper_motion",
     },
     {
       id: "st_met",
       label: "Stellar Metallicity [dex]",
       description:
         "Measurement of the metal content of the photosphere of the star as compared to the hydrogen content",
-        link:"https://en.wikipedia.org/wiki/Stellar_metallicity"
+      link: "https://en.wikipedia.org/wiki/Stellar_metallicity",
     },
     {
       id: "st_metratio",
       label: "Stellar Metallicity Ratio",
       description:
         "Ratio for the Metallicity Value ([Fe/H] denotes iron abundance, [M/H] refers to a general metal content)",
-        link:"https://en.wikipedia.org/wiki/Stellar_metallicity"
+      link: "https://en.wikipedia.org/wiki/Stellar_metallicity",
     },
     {
       id: "st_lum",
       label: "Stellar Luminosity [log10(Solar)]",
       description:
         "Amount of energy emitted by a star per unit time, measured in units of solar luminosities",
-        link:"https://en.wikipedia.org/wiki/Stellar_luminosity"
+      link: "https://en.wikipedia.org/wiki/Stellar_luminosity",
     },
     {
       id: "st_age",
       label: "Stellar Age [Gyr]",
       description: "The age of the host star",
-      link:"https://en.wikipedia.org/wiki/Stellar_age_estimation"
+      link: "https://en.wikipedia.org/wiki/Stellar_age_estimation",
     },
     {
       id: "st_dens",
       label: "Stellar Density [g/cm**3]",
       description: "Amount of mass per unit of volume of the star",
-      link:"https://en.wikipedia.org/wiki/Stellar_density"
+      link: "https://en.wikipedia.org/wiki/Stellar_density",
     },
     {
       id: "st_rotp",
       label: "Stellar Rotational Period [days]",
       description:
         "The time required for the planet host star to complete one rotation, assuming it is a solid body",
-        link:"https://en.wikipedia.org/wiki/Rotation_period"
+      link: "https://en.wikipedia.org/wiki/Rotation_period",
     },
   ],
   stellarImages: {
@@ -462,7 +510,7 @@ const AppData = {
       label: "Host Star",
       description: "The Star hosting this planet",
       link: "https://en.wikipedia.org/wiki/Planet-hosting_star",
-    }, 
+    },
     {
       id: "planet_type",
       label: "Planet Type",
@@ -474,7 +522,7 @@ const AppData = {
       label: "Sub-Type",
       description: "A description of the planet's visuals, according to NASA.",
       link: "https://en.wikipedia.org/wiki/List_of_planet_types",
-    },   
+    },
     {
       id: "mass_display",
       label: "Mass",
@@ -492,25 +540,25 @@ const AppData = {
       label: "Discovery Year",
       description: "The year the planet was discovered",
       link: "https://en.wikipedia.org/wiki/Discoveries_of_exoplanets",
-    },  
+    },
     {
       id: "pl_discmethod",
       label: "Discovery Method",
       description: "Planet's discovery method",
       link: "https://en.wikipedia.org/wiki/Methods_of_detecting_exoplanets",
-    },  
+    },
     {
       id: "pl_facility",
       label: "Facility",
       description: "The facility that discovered the planet",
       link: "https://exoplanets.psu.edu/category/facilities/",
-    },  
+    },
     {
       id: "pl_radj",
       label: "Radius J",
       description: "Planet's radius in Jupiter radii",
       link: "https://en.wikipedia.org/wiki/Jupiter_radius",
-    },  
+    },
     {
       id: "pl_rade",
       label: "Radius E",
@@ -520,29 +568,28 @@ const AppData = {
     {
       id: "pl_orbeccen",
       label: "Orbital Eccentricity",
-      description: "In astrodynamics, the orbital eccentricity of an astronomical object is a dimensionless parameter that determines the amount by which its orbit around another body deviates from a perfect circle.",
+      description:
+        "In astrodynamics, the orbital eccentricity of an astronomical object is a dimensionless parameter that determines the amount by which its orbit around another body deviates from a perfect circle.",
       link: "https://en.wikipedia.org/wiki/Orbital_eccentricity#:~:text=The%20eccentricity%20of%20Earth's%20orbit,gravitational%20attractions%20among%20the%20planets.",
-    }
+    },
   ],
   getStellarImage: (stellarClass) => {
-    return stellarClass in AppData.stellarImages ? AppData.stellarImages[stellarClass] : null;
+    return stellarClass in AppData.stellarImages
+      ? AppData.stellarImages[stellarClass]
+      : null;
   },
   loadData: async () => {
     AppData.setLoading(true);
     if (AppData.exoplanets.length == 0) {
       console.time("loading_exos");
-      const binary = await fetch(
-        "/exoplanets-review/data/out/exoplanets.json"
-      );
+      const binary = await fetch("/exoplanets-review/data/out/exoplanets.json");
       AppData.exoplanets = await binary.json();
       console.timeEnd("loading_exos");
     }
     //
     if (AppData.stars.length == 0) {
       console.time("loading_stars");
-      const binary = await fetch(
-        "/exoplanets-review/data/out/exostars.json"
-      );
+      const binary = await fetch("/exoplanets-review/data/out/exostars.json");
       AppData.stars = await binary.json();
       console.timeEnd("loading_stars");
       //console.log("Stars Loaded: ", AppData.stars.length);
