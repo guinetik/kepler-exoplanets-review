@@ -23,7 +23,7 @@ const generate_world = (space, randomMass, planetData) => {
     planetColor = SolarSystemFactory.getPlanetColor(planetData, 4);
   }
   const query = planetData.planet_type.toLowerCase();
-  console.log("planetColor", planetColor);
+  //console.log("planetColor", planetColor);
   // 🌏 PLANET 🌏
   const topHempishere = new Zdog.Hemisphere({
     addTo: space,
@@ -72,7 +72,7 @@ const generate_world = (space, randomMass, planetData) => {
 
   // ☁️☁️☁️ CLOUDS ☁️☁️☁️
   let cloudCount = 0;
-  console.log("planetData.visType", planetData.visType);
+  //console.log("planetData.visType", planetData.visType);
   if (planetData.visType.toLowerCase() === "lavaatmos") {
     for (var i = 0; i < atmosphere_thickness * Math.random() * 10; i++) {
       create_cloud_cluster({
@@ -238,19 +238,19 @@ const generate_world = (space, randomMass, planetData) => {
       });
     }
   } else {
-    console.log("query", query);
+    //console.log("query", query);
     if (query === "terrestrial") {
-      buildLandMass({ sLat: 20, sLng: 37, stages: 12 });
-      buildLandMass({ sLat: 40, sLng: -37, stages: 12 });
-      buildLandMass({ sLat: 30, sLng: -27, stages: 12 });
-      buildLandMass({ sLat: 0, sLng: 150, stages: 8 });
-      buildLandMass({ sLat: 60, sLng: -70, stages: 12 });
-      buildLandMass({ sLat: 10, sLng: -10, stages: 8 });
-      buildLandMass({ sLat: -50, sLng: -130, stages: 9 });
-      buildLandMass({ sLat: 20, sLng: -90, stages: 6 });
-      buildLandMass({ sLat: -10, sLng: 10, stages: 12 });
-      buildLandMass({ sLat: -15, sLng: 180, stages: 12 });
-      buildLandMass({ sLat: 35, sLng: 80, stages: 9 });
+      buildLandMass({ sLat: 20, sLng: 37, stages: 10 });
+      buildLandMass({ sLat: 40, sLng: -37, stages: 10 });
+      buildLandMass({ sLat: 30, sLng: -27, stages: 10 });
+      buildLandMass({ sLat: 0, sLng: 150, stages: 5 });
+      buildLandMass({ sLat: 60, sLng: -70, stages: 10 });
+      buildLandMass({ sLat: 10, sLng: -10, stages: 5 });
+      buildLandMass({ sLat: -50, sLng: -130, stages: 8 });
+      buildLandMass({ sLat: 20, sLng: -90, stages: 5 });
+      buildLandMass({ sLat: -10, sLng: 10, stages: 10 });
+      buildLandMass({ sLat: -15, sLng: 180, stages: 10 });
+      buildLandMass({ sLat: 35, sLng: 80, stages: 8 });
       // Reefs
       buildLandMass({ sLat: -35, sLng: 80, stages: 3 });
       buildLandMass({ sLat: -40, sLng: 90, stages: 3 });
@@ -350,50 +350,39 @@ const generate_world = (space, randomMass, planetData) => {
         "rgba(170,110,92,1)",
         "rgba(200,200,200,0.5)",
       ];
-      for (var i = 0; i < 4; i++) {
-        buildLandMass(
-          {
-            sLat: random(-75, 75),
-            sLng: random(-180, 0),
-            stages: random(2, 6),
-          },
-          superEarthColors,
-          false
-        );
-      }
-      for (var i = 0; i < 10; i++) {
-        buildLandMass(
-          {
-            sLat: random(-75, 75),
-            sLng: random(0, 180),
-            stages: random(4, 6),
-          },
-          superEarthColors,
-          true
-        );
-      }
-      for (var i = 0; i < 4; i++) {
-        buildLandMass(
-          {
-            sLat: random(-75, 75),
-            sLng: random(0, 180),
-            stages: random(2, 6),
-          },
-          superEarthColors,
-          false
-        );
-      }
-      for (var i = 0; i < 90; i++) {
-        buildLandMass(
-          {
-            sLat: random(-55, 55),
-            sLng: random(-179, 180),
-            stages: random(1, 3),
-          },
-          superEarthColors,
-          false
-        );
-      }
+      buildLandMass({ sLat: 20, sLng: 37, stages: 12 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: 40, sLng: -37, stages: 12 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: 30, sLng: -27, stages: 12 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: 0, sLng: 150, stages: 8 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: 60, sLng: -70, stages: 12 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: 10, sLng: -10, stages: 8 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: -50, sLng: -130, stages: 9 },
+        superEarthColors,
+        true);
+      buildLandMass({ sLat: 20, sLng: -90, stages: 6 },
+        superEarthColors,
+        true);
+      buildLandMass({ sLat: -10, sLng: 10, stages: 12 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: -15, sLng: 180, stages: 12 },
+        superEarthColors,
+        false);
+      buildLandMass({ sLat: 35, sLng: 80, stages: 9 },
+        superEarthColors,
+        true);
     } else if (query === "gas giant") {
       const gasGiantColors = [
         "rgba(0,0,0,0.1)",
