@@ -15,8 +15,7 @@ import { ReviewModal } from "../components/modals";
 export default function PlanetPage() {
   const childRef = useRef();
   //
-  const params = useParams();
-  const planetId = params.planet_id;
+  const { planet_id } = useParams();
   /**
    * Controls the modal
    */
@@ -56,7 +55,7 @@ export default function PlanetPage() {
       /**
        * @type {Planet}
        */
-      const p = AppData.findExoplanetById(planetId);
+      const p = AppData.findExoplanetById(planet_id);
       if (p.id) {
         setPlanet(p);
         if (planet.id) {
@@ -66,13 +65,13 @@ export default function PlanetPage() {
       }
     }
     fetchData();
-  }, [planet]);
+  }, [planet_id, planet]);
   return (
     <main className="w-full flex justify-center items-center">
       <ReviewModal
         show={isModalOpen}
         user={user}
-        planet_id={planetId}
+        planet_id={planet_id}
         onClose={() => {
           setModalOpen(false);
           childRef.current.refresh();
@@ -156,7 +155,7 @@ export default function PlanetPage() {
                     >
                       Planet Reviews
                     </h2>
-                    <ReviewsComponent planet_id={planetId} ref={childRef} />
+                    <ReviewsComponent planet_id={planet_id} ref={childRef} />
                   </div>
                 </div>
               </article>

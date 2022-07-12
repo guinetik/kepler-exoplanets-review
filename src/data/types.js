@@ -121,3 +121,26 @@
 /**
  * @typedef { import("firebase/app").FirebaseApp } FirebaseApp
  */
+/**
+ * @typedef MainNavItem
+ * @type {object}
+ * @property {string} title - The name of the item as it displays in the navbar
+ * @property {string} key - A key to associate with the item, it will become a href in the navbar
+ * @property {('always'|'signedin'|'signedout')} show - When to show the item in the navbar
+ */
+/**
+ * @typedef MainNav
+ * @type {object}
+ * @property {Array<MainNavItem>} main - The main navigation
+ * @property {Array<MainNavItem>} dropdown - The dropdown navigation
+ */
+/**
+ * @typedef PlanetaryProperties
+ * The planetary properties are something kind of complex to show in a page.
+ * So I'm trying to give the user as much context as possible so we have a description and a link for more info.
+ * @type {object}
+ * @property {string} id - The id of the property. This will map to a prop on the target object.
+ * @property {string} label - The name of the property. This will be displayed in the UI.
+ * @property {string} description - A human readable description of the property to display in a tooltip.
+ * @property {string} link - A link to a wiki page for more info on the property.
+ */

@@ -1,7 +1,3 @@
-/*
-  To simplify state transitions, I'm creating this "master" js file that will have all available states for the app.
-  Components will reference AppState to get props and we'll need to manage this object as data gets loaded in.
- */
 import "./types";
 import Zdog from "zdog";
 import SolarSystemFactory from "./solarsystem.factory";
@@ -250,372 +246,458 @@ const SOLAR_SYSTEM = [
     ring: 4,
   },
 ];
-const AppData = {
-  nav: {
-    main: [
+/**
+ * To simplify state transitions, I'm creating this "master" js file that will have all available states for the app.
+  Components will reference AppData to get props and we'll need to manage this object as data gets loaded in.
+ */
+class AppDataImpl {
+  constructor() {
+    /**
+     * NASA's API key
+     * @type {string}
+     */
+    this.NASA_API_KEY = "buEpNbTXwpkoPmCnvOBpGbDZgr5x5JgdmPoD8sfQ";
+    /**
+     * A model for the main navigation
+     * @type {MainNav}
+     */
+    this.nav = {
+      main: [
+        {
+          title: "Home",
+          key: "/",
+        },
+        {
+          title: "Stars",
+          key: "stars",
+        },
+        {
+          title: "Exoplanets",
+          key: "planets",
+        },
+        {
+          title: "Pic of the Day",
+          key: "apod",
+        },
+        {
+          title: "About",
+          key: "about",
+        },
+      ],
+      dropdown: [
+        {
+          title: "Random Planet",
+          key: "random-planet",
+          show: "always",
+        },
+        {
+          title: "Sign Out",
+          key: "signout",
+          show: "signedin",
+          divider: true,
+        },
+      ],
+    };
+    /**
+     * A model for the solar system
+     */
+    this.solarSystem = SOLAR_SYSTEM;
+    /**
+     * An array of stars
+     * @type {Star[]}
+     */
+    this.stars = [];
+    /**
+     * An array of planets
+     * @type {Planet[]}
+     */
+    this.exoplanets = [];
+    /**
+     * A boolean to express if the app is in a loading state
+     * @type {boolean}
+     */
+    this.loading = true;
+    /**
+     * A list of fields with stellar properties.
+     * These will be displayed in the table next to the star system.
+     * @type {PlanetaryProperties[]}
+     */
+    this.stellarFields = [
       {
-        title: "Home",
-        key: "/",
+        id: "distanceFromEarth",
+        label: "Distance from Earth",
+        description: "Distance of the star from Earth",
+        link: "https://en.wikipedia.org/wiki/Stellar_parallax#:~:text=The%20approximate%20distance%20is%20simply,parsecs%20(4.24%20ly)%20distant.",
       },
       {
-        title: "Stars",
-        key: "stars",
+        id: "starType",
+        label: "Star Type",
+        description: "Star Type according to the XXX scale",
+        link: "https://en.wikipedia.org/wiki/Stellar_classification",
       },
       {
-        title: "Exoplanets",
-        key: "planets",
+        id: "constellation",
+        label: "Constellation",
+        description: "Constellation this star is part of",
+        link: "https://en.wikipedia.org/wiki/Constellation",
       },
       {
-        title: "Pic of the Day",
-        key: "apod",
+        id: "disc_year",
+        label: "Discovery Year",
+        description: "The year the star was discovered",
+        link: "https://en.wikipedia.org/wiki/History_of_astronomy",
       },
       {
-        title: "About",
-        key: "about",
-      },
-    ],
-    dropdown: [
-      {
-        title: "Random Planet",
-        key: "/",
-        show: "always",
+        id: "sy_snum",
+        label: "Number of Stars",
+        description: "Number of stars in the planetary system",
+        link: "https://en.wikipedia.org/wiki/Star",
       },
       {
-        title: "Account",
-        key: "account",
-        show: "signedin",
+        id: "sy_pnum",
+        label: "Number of Planets",
+        description: "Number of planets in the planetary system",
+        link: "https://en.wikipedia.org/wiki/Planet",
       },
       {
-        title: "My Reviews",
-        key: "my-reviews",
-        show: "signedin",
+        id: "sy_mnum",
+        label: "Number of Moons",
+        description: "Number of moons in the planetary system",
+        link: "https://en.wikipedia.org/wiki/Moon",
       },
       {
-        title: "Sign Out",
-        key: "signout",
-        show: "signedin",
-        divider: true,
+        id: "st_teff",
+        label: "Stellar Effective Temperature [K]",
+        description:
+          "Temperature of the star as modeled by a black body emitting the same total amount of electromagnetic radiation",
+        link: "https://en.wikipedia.org/wiki/Stellar_classification",
       },
-    ],
-  },
-  solarSystem: SOLAR_SYSTEM,
-  stars: [],
-  exoplanets: [],
-  loading:true,
-  setLoading: (loading) => {
-    AppData.loading = loading;
-  },
-  //https://astronomy.com/magazine/glenn-chaple/2021/04/color-coding-stars
-  stellarFields: [
-    {
-      id: "distanceFromEarth",
-      label: "Distance from Earth",
-      description: "Distance of the star from Earth",
-      link: "https://en.wikipedia.org/wiki/Stellar_parallax#:~:text=The%20approximate%20distance%20is%20simply,parsecs%20(4.24%20ly)%20distant.",
-    },
-    {
-      id: "starType",
-      label: "Star Type",
-      description: "Star Type according to the XXX scale",
-      link: "https://en.wikipedia.org/wiki/Stellar_classification",
-    },
-    {
-      id: "constellation",
-      label: "Constellation",
-      description: "Constellation this star is part of",
-      link: "https://en.wikipedia.org/wiki/Constellation",
-    },
-    {
-      id: "disc_year",
-      label: "Discovery Year",
-      description: "The year the star was discovered",
-      link: "https://en.wikipedia.org/wiki/History_of_astronomy",
-    },
-    {
-      id: "sy_snum",
-      label: "Number of Stars",
-      description: "Number of stars in the planetary system",
-      link: "https://en.wikipedia.org/wiki/Star",
-    },
-    {
-      id: "sy_pnum",
-      label: "Number of Planets",
-      description: "Number of planets in the planetary system",
-      link: "https://en.wikipedia.org/wiki/Planet",
-    },
-    {
-      id: "sy_mnum",
-      label: "Number of Moons",
-      description: "Number of moons in the planetary system",
-      link: "https://en.wikipedia.org/wiki/Moon",
-    },
-    {
-      id: "st_teff",
-      label: "Stellar Effective Temperature [K]",
-      description:
-        "Temperature of the star as modeled by a black body emitting the same total amount of electromagnetic radiation",
-      link: "https://en.wikipedia.org/wiki/Stellar_classification",
-    },
-    {
-      id: "st_rad",
-      label: "Stellar Radius [Solar Radius]",
-      description:
-        "Length of a line segment from the center of the star to its surface, measured in units of radius of the Sun",
-      link: "https://en.wikipedia.org/wiki/Solar_radius",
-    },
-    {
-      id: "st_mass",
-      label: "Stellar Mass [Solar mass]",
-      description:
-        "Amount of matter contained in the star, measured in units of masses of the Sun",
-      link: "https://en.wikipedia.org/wiki/Stellar_mass",
-    },
-    {
-      id: "rastr",
-      label: "RA [sexagesimal]",
-      description:
-        "Right Ascension of the planetary system in sexagesimal format",
-      link: "https://en.wikipedia.org/wiki/Right_ascension",
-    },
-    {
-      id: "decstr",
-      label: "Dec [sexagesimal]",
-      description:
-        "Declination of the planetary system in sexagesimal notation",
-      link: "https://en.wikipedia.org/wiki/Declination",
-    },
-    {
-      id: "sy_dist",
-      label: "Distance [pc]",
-      description: "Distance to the planetary system in units of parsecs",
-      link: "https://pt.wikipedia.org/wiki/Parsec",
-    },
-    {
-      id: "sy_plx",
-      label: "Parallax [mas]",
-      description:
-        "Difference in the angular position of a star as measured at two opposite positions within the Earth's orbit",
-      link: "https://en.wikipedia.org/wiki/Stellar_parallax",
-    },
-    {
-      id: "elat",
-      label: "Ecliptic Latitude [deg]",
-      description:
-        "Ecliptic latitude of the planetary system in units of decimal degrees",
-      link: "https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0.",
-    },
-    {
-      id: "elon",
-      label: "Ecliptic Longitude [deg]",
-      description:
-        "Ecliptic longitude of the planetary system in units of decimal degrees",
-      link: "https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0.",
-    },
-    {
-      id: "glat",
-      label: "Galactic Latitude [deg]",
-      description:
-        "Galactic latitude of the planetary system in units of decimal degrees",
-      link: "https://en.wikipedia.org/wiki/Galactic_coordinate_system",
-    },
-    {
-      id: "glon",
-      label: "Galactic Longitude [deg]",
-      description:
-        "Galactic longitude of the planetary system in units of decimal degrees",
-      link: "https://en.wikipedia.org/wiki/Galactic_coordinate_system",
-    },
-    {
-      id: "sy_pmra",
-      label: "Proper Motion (RA) [mas/yr]",
-      description:
-        "Angular change in right ascension over time as seen from the center of mass of the Solar System",
-      link: "https://en.wikipedia.org/wiki/Proper_motion",
-    },
-    {
-      id: "sy_pmdec",
-      label: "Proper Motion (Dec) [mas/yr]",
-      description:
-        "Angular change in declination over time as seen from the center of mass of the Solar System",
-      link: "https://en.wikipedia.org/wiki/Proper_motion",
-    },
-    {
-      id: "sy_tmag",
-      label: "TESS Magnitude",
-      description:
-        "Brightness of the host star as measured using the TESS bandpass, in units of magnitudes",
-      link: "https://en.wikipedia.org/wiki/Transiting_Exoplanet_Survey_Satellite",
-    },
-    {
-      id: "sy_pm",
-      label: "Total Proper Motion [mas/yr]",
-      description:
-        "Angular change in position over time as seen from the center of mass of the Solar System",
-      link: "https://en.wikipedia.org/wiki/Proper_motion",
-    },
-    {
-      id: "st_met",
-      label: "Stellar Metallicity [dex]",
-      description:
-        "Measurement of the metal content of the photosphere of the star as compared to the hydrogen content",
-      link: "https://en.wikipedia.org/wiki/Stellar_metallicity",
-    },
-    {
-      id: "st_metratio",
-      label: "Stellar Metallicity Ratio",
-      description:
-        "Ratio for the Metallicity Value ([Fe/H] denotes iron abundance, [M/H] refers to a general metal content)",
-      link: "https://en.wikipedia.org/wiki/Stellar_metallicity",
-    },
-    {
-      id: "st_lum",
-      label: "Stellar Luminosity [log10(Solar)]",
-      description:
-        "Amount of energy emitted by a star per unit time, measured in units of solar luminosities",
-      link: "https://en.wikipedia.org/wiki/Stellar_luminosity",
-    },
-    {
-      id: "st_age",
-      label: "Stellar Age [Gyr]",
-      description: "The age of the host star",
-      link: "https://en.wikipedia.org/wiki/Stellar_age_estimation",
-    },
-    {
-      id: "st_dens",
-      label: "Stellar Density [g/cm**3]",
-      description: "Amount of mass per unit of volume of the star",
-      link: "https://en.wikipedia.org/wiki/Stellar_density",
-    },
-    {
-      id: "st_rotp",
-      label: "Stellar Rotational Period [days]",
-      description:
-        "The time required for the planet host star to complete one rotation, assuming it is a solid body",
-      link: "https://en.wikipedia.org/wiki/Rotation_period",
-    },
-  ],
-  stellarImages: {
-    M: "static/M.webp",
-    K: "static/K.webp",
-    L: "static/L.webp",
-    G: "static/G.webp",
-    F: "static/F.webp",
-    A: "static/A.webp",
-    B: "static/B.webp",
-    O: "static/O.webp",
-  },
-  planetFields: [
-    {
-      id: "pl_hostname",
-      label: "Host Star",
-      description: "The Star hosting this planet",
-      link: "https://en.wikipedia.org/wiki/Planet-hosting_star",
-    },
-    {
-      id: "planet_type",
-      label: "Planet Type",
-      description: "A description of the type of the planet",
-      link: "https://en.wikipedia.org/wiki/List_of_planet_types",
-    },
-    {
-      id: "plType",
-      label: "Sub-Type",
-      description: "A description of the planet's visuals, according to NASA.",
-      link: "https://en.wikipedia.org/wiki/List_of_planet_types",
-    },
-    {
-      id: "mass_display",
-      label: "Mass",
-      description: "A human readable display of the planet's mass",
-      link: "https://en.wikipedia.org/wiki/Planetary_mass",
-    },
-    {
-      id: "period_display",
-      label: "Period",
-      description: "A human readable display of the planet's orbital period",
-      link: "https://en.wikipedia.org/wiki/Orbital_period#:~:text=The%20orbital%20period%20(also%20revolution,other%20stars%2C%20or%20binary%20stars.",
-    },
-    {
-      id: "disc_year",
-      label: "Discovery Year",
-      description: "The year the planet was discovered",
-      link: "https://en.wikipedia.org/wiki/Discoveries_of_exoplanets",
-    },
-    {
-      id: "pl_discmethod",
-      label: "Discovery Method",
-      description: "Planet's discovery method",
-      link: "https://en.wikipedia.org/wiki/Methods_of_detecting_exoplanets",
-    },
-    {
-      id: "pl_facility",
-      label: "Facility",
-      description: "The facility that discovered the planet",
-      link: "https://exoplanets.psu.edu/category/facilities/",
-    },
-    {
-      id: "pl_radj",
-      label: "Radius J",
-      description: "Planet's radius in Jupiter radii",
-      link: "https://en.wikipedia.org/wiki/Jupiter_radius",
-    },
-    {
-      id: "pl_rade",
-      label: "Radius E",
-      description: "Planet's radius in Earth radii",
-      link: "https://en.wikipedia.org/wiki/Earth_radius",
-    },
-    {
-      id: "pl_orbeccen",
-      label: "Orbital Eccentricity",
-      description:
-        "In astrodynamics, the orbital eccentricity of an astronomical object is a dimensionless parameter that determines the amount by which its orbit around another body deviates from a perfect circle.",
-      link: "https://en.wikipedia.org/wiki/Orbital_eccentricity#:~:text=The%20eccentricity%20of%20Earth's%20orbit,gravitational%20attractions%20among%20the%20planets.",
-    },
-  ],
-  getStellarImage: (stellarClass) => {
-    return stellarClass in AppData.stellarImages
-      ? AppData.stellarImages[stellarClass]
+      {
+        id: "st_rad",
+        label: "Stellar Radius [Solar Radius]",
+        description:
+          "Length of a line segment from the center of the star to its surface, measured in units of radius of the Sun",
+        link: "https://en.wikipedia.org/wiki/Solar_radius",
+      },
+      {
+        id: "st_mass",
+        label: "Stellar Mass [Solar mass]",
+        description:
+          "Amount of matter contained in the star, measured in units of masses of the Sun",
+        link: "https://en.wikipedia.org/wiki/Stellar_mass",
+      },
+      {
+        id: "rastr",
+        label: "RA [sexagesimal]",
+        description:
+          "Right Ascension of the planetary system in sexagesimal format",
+        link: "https://en.wikipedia.org/wiki/Right_ascension",
+      },
+      {
+        id: "decstr",
+        label: "Dec [sexagesimal]",
+        description:
+          "Declination of the planetary system in sexagesimal notation",
+        link: "https://en.wikipedia.org/wiki/Declination",
+      },
+      {
+        id: "sy_dist",
+        label: "Distance [pc]",
+        description: "Distance to the planetary system in units of parsecs",
+        link: "https://pt.wikipedia.org/wiki/Parsec",
+      },
+      {
+        id: "sy_plx",
+        label: "Parallax [mas]",
+        description:
+          "Difference in the angular position of a star as measured at two opposite positions within the Earth's orbit",
+        link: "https://en.wikipedia.org/wiki/Stellar_parallax",
+      },
+      {
+        id: "elat",
+        label: "Ecliptic Latitude [deg]",
+        description:
+          "Ecliptic latitude of the planetary system in units of decimal degrees",
+        link: "https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0.",
+      },
+      {
+        id: "elon",
+        label: "Ecliptic Longitude [deg]",
+        description:
+          "Ecliptic longitude of the planetary system in units of decimal degrees",
+        link: "https://en.wikipedia.org/wiki/Ecliptic_coordinate_system#:~:text=Ecliptic%20latitude%20or%20celestial%20latitude,celestial%20latitude%20of%20%2B90%C2%B0.",
+      },
+      {
+        id: "glat",
+        label: "Galactic Latitude [deg]",
+        description:
+          "Galactic latitude of the planetary system in units of decimal degrees",
+        link: "https://en.wikipedia.org/wiki/Galactic_coordinate_system",
+      },
+      {
+        id: "glon",
+        label: "Galactic Longitude [deg]",
+        description:
+          "Galactic longitude of the planetary system in units of decimal degrees",
+        link: "https://en.wikipedia.org/wiki/Galactic_coordinate_system",
+      },
+      {
+        id: "sy_pmra",
+        label: "Proper Motion (RA) [mas/yr]",
+        description:
+          "Angular change in right ascension over time as seen from the center of mass of the Solar System",
+        link: "https://en.wikipedia.org/wiki/Proper_motion",
+      },
+      {
+        id: "sy_pmdec",
+        label: "Proper Motion (Dec) [mas/yr]",
+        description:
+          "Angular change in declination over time as seen from the center of mass of the Solar System",
+        link: "https://en.wikipedia.org/wiki/Proper_motion",
+      },
+      {
+        id: "sy_tmag",
+        label: "TESS Magnitude",
+        description:
+          "Brightness of the host star as measured using the TESS bandpass, in units of magnitudes",
+        link: "https://en.wikipedia.org/wiki/Transiting_Exoplanet_Survey_Satellite",
+      },
+      {
+        id: "sy_pm",
+        label: "Total Proper Motion [mas/yr]",
+        description:
+          "Angular change in position over time as seen from the center of mass of the Solar System",
+        link: "https://en.wikipedia.org/wiki/Proper_motion",
+      },
+      {
+        id: "st_met",
+        label: "Stellar Metallicity [dex]",
+        description:
+          "Measurement of the metal content of the photosphere of the star as compared to the hydrogen content",
+        link: "https://en.wikipedia.org/wiki/Stellar_metallicity",
+      },
+      {
+        id: "st_metratio",
+        label: "Stellar Metallicity Ratio",
+        description:
+          "Ratio for the Metallicity Value ([Fe/H] denotes iron abundance, [M/H] refers to a general metal content)",
+        link: "https://en.wikipedia.org/wiki/Stellar_metallicity",
+      },
+      {
+        id: "st_lum",
+        label: "Stellar Luminosity [log10(Solar)]",
+        description:
+          "Amount of energy emitted by a star per unit time, measured in units of solar luminosities",
+        link: "https://en.wikipedia.org/wiki/Stellar_luminosity",
+      },
+      {
+        id: "st_age",
+        label: "Stellar Age [Gyr]",
+        description: "The age of the host star",
+        link: "https://en.wikipedia.org/wiki/Stellar_age_estimation",
+      },
+      {
+        id: "st_dens",
+        label: "Stellar Density [g/cm**3]",
+        description: "Amount of mass per unit of volume of the star",
+        link: "https://en.wikipedia.org/wiki/Stellar_density",
+      },
+      {
+        id: "st_rotp",
+        label: "Stellar Rotational Period [days]",
+        description:
+          "The time required for the planet host star to complete one rotation, assuming it is a solid body",
+        link: "https://en.wikipedia.org/wiki/Rotation_period",
+      },
+    ];
+    /**
+     * A list of fields with the planetary properties.
+     * These will be displayed in the table next to the planet description.
+     * @type {PlanetaryProperties[]}
+     */
+    this.planetFields = [
+      {
+        id: "pl_hostname",
+        label: "Host Star",
+        description: "The Star hosting this planet",
+        link: "https://en.wikipedia.org/wiki/Planet-hosting_star",
+      },
+      {
+        id: "planet_type",
+        label: "Planet Type",
+        description: "A description of the type of the planet",
+        link: "https://en.wikipedia.org/wiki/List_of_planet_types",
+      },
+      {
+        id: "plType",
+        label: "Sub-Type",
+        description:
+          "A description of the planet's visuals, according to NASA.",
+        link: "https://en.wikipedia.org/wiki/List_of_planet_types",
+      },
+      {
+        id: "mass_display",
+        label: "Mass",
+        description: "A human readable display of the planet's mass",
+        link: "https://en.wikipedia.org/wiki/Planetary_mass",
+      },
+      {
+        id: "period_display",
+        label: "Period",
+        description: "A human readable display of the planet's orbital period",
+        link: "https://en.wikipedia.org/wiki/Orbital_period#:~:text=The%20orbital%20period%20(also%20revolution,other%20stars%2C%20or%20binary%20stars.",
+      },
+      {
+        id: "disc_year",
+        label: "Discovery Year",
+        description: "The year the planet was discovered",
+        link: "https://en.wikipedia.org/wiki/Discoveries_of_exoplanets",
+      },
+      {
+        id: "pl_discmethod",
+        label: "Discovery Method",
+        description: "Planet's discovery method",
+        link: "https://en.wikipedia.org/wiki/Methods_of_detecting_exoplanets",
+      },
+      {
+        id: "pl_facility",
+        label: "Facility",
+        description: "The facility that discovered the planet",
+        link: "https://exoplanets.psu.edu/category/facilities/",
+      },
+      {
+        id: "pl_radj",
+        label: "Radius J",
+        description: "Planet's radius in Jupiter radii",
+        link: "https://en.wikipedia.org/wiki/Jupiter_radius",
+      },
+      {
+        id: "pl_rade",
+        label: "Radius E",
+        description: "Planet's radius in Earth radii",
+        link: "https://en.wikipedia.org/wiki/Earth_radius",
+      },
+      {
+        id: "pl_orbeccen",
+        label: "Orbital Eccentricity",
+        description:
+          "In astrodynamics, the orbital eccentricity of an astronomical object is a dimensionless parameter that determines the amount by which its orbit around another body deviates from a perfect circle.",
+        link: "https://en.wikipedia.org/wiki/Orbital_eccentricity#:~:text=The%20eccentricity%20of%20Earth's%20orbit,gravitational%20attractions%20among%20the%20planets.",
+      },
+    ];
+    /**
+     * A small map of star types and a link to an image representing them.
+     * @type {{[type: string]: string}}
+     */
+    this.stellarImages = {
+      M: "static/M.webp",
+      K: "static/K.webp",
+      L: "static/L.webp",
+      G: "static/G.webp",
+      F: "static/F.webp",
+      A: "static/A.webp",
+      B: "static/B.webp",
+      O: "static/O.webp",
+    };
+  }
+  getFormattedDate = (date) => {
+    return date.toISOString().split("T")[0]
+  };
+  /**
+   * Controls weather the app is loading data.
+   * @param {boolean} value - the value to set loading to
+   */
+  setLoading = (value) => {
+    this.loading = value;
+  };
+  /**
+   * Returns a visual representation for a star based on the type.
+   * @param {{'M', 'K', 'L', 'G', 'F', 'A', 'B', 'O'}} stellarClass - The class of the star as per the luminosity class.
+   * @returns {string} - An url to an image of the star.
+   */
+  getStellarImage = (stellarClass) => {
+    return stellarClass in this.stellarImages
+      ? this.stellarImages[stellarClass]
       : null;
-  },
-  loadData: async () => {
-    AppData.setLoading(true);
-    if (AppData.exoplanets.length == 0) {
+  };
+  /**
+   * Loads the main App Data.
+   * It consists of two JSOn files that are loaded in parallel.
+   * Since this function is async, you need to use await to wait for it to finish.
+   */
+  loadData = async () => {
+    this.setLoading(true);
+    if (this.exoplanets.length == 0) {
       console.time("loading_exos");
       const binary = await fetch("/exoplanets-review/data/out/exoplanets.json");
-      AppData.exoplanets = await binary.json();
+      this.exoplanets = await binary.json();
       console.timeEnd("loading_exos");
     }
     //
-    if (AppData.stars.length == 0) {
+    if (this.stars.length == 0) {
       console.time("loading_stars");
       const binary = await fetch("/exoplanets-review/data/out/exostars.json");
-      AppData.stars = await binary.json();
+      this.stars = await binary.json();
       console.timeEnd("loading_stars");
-      //console.log("Stars Loaded: ", AppData.stars.length);
+      //console.log("Stars Loaded: ", this.stars.length);
     }
-    AppData.setLoading(false);
-  },
-  getStar: (id) => {
-    //console.log("AppData.stars", AppData.stars.length, id);
-    return AppData.stars.find((s) => {
+    this.setLoading(false);
+  };
+  /**
+   * Returns the astronomy picture of the day for the given date.
+   * @returns {Object} - the APOD response object
+   */
+  loadAstronomyPictureOfTheDay = async (date) => {
+    console.time("loading_apod");
+    if(!date) {
+      //set date to today's date in YYYY-MM-DD format
+      date = new Date().toISOString().split("T")[0];
+    }
+    const binary = await fetch(
+      `https://api.nasa.gov/planetary/apod?api_key=${this.NASA_API_KEY}&date=${date}`
+    );
+    const apod = await binary.json();
+    console.timeEnd("loading_apod");
+    return apod;
+  };
+  /**
+   * Returns a star based on its id.
+   * @param {string} id - The id, or hostname of the star as it is commonly known in literature.
+   * @returns {Star} - the star object with that ID
+   */
+  getStar = (id) => {
+    //console.log("this.stars", this.stars.length, id);
+    return this.stars.find((s) => {
       //console.log(s.id);
       return s.id === id;
     });
-  },
-  findExoplanetById: (id) => {
-    return AppData.exoplanets.find((e) => {
+  };
+  /**
+   * Returns a planet based on its id.
+   * @param {string} id - the id of the planet as it is commonly known in literature.
+   * @returns {Planet} - the planet object with that ID.
+   */
+  findExoplanetById = (id) => {
+    return this.exoplanets.find((e) => {
       return e.id === id;
     });
-  },
+  };
   /**
    * Creates a Solar system based on a host star.
    * This method returns an array
    * @param {Star} star - The star host of the solar system
    * @returns {Array<StellarBody>} - An array of stellar bodies of the solar system
    */
-  generateSolarSystem: (star) => {
-    return SolarSystemFactory.generate(star, AppData.exoplanets);
-  },
-};
+  generateSolarSystem = (star) => {
+    return SolarSystemFactory.generate(star, this.exoplanets);
+  };
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new AppDataImpl();
+    }
+
+    return this.instance;
+  }
+}
+const AppData = AppDataImpl.getInstance();
 export default AppData;
