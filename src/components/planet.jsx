@@ -7,7 +7,7 @@ Inspired from https://codepen.io/robbobfrh84/pen/pmXYzY
 */
 // 🌱 CHARACTERISTICS 🌱
 const planet_radius = 125;
-const atmosphere_thickness = 16;
+const atmosphere_thickness = 30;
 let offset_x = 0;
 let offset_y = -50;
 
@@ -17,7 +17,7 @@ let regenerate = false;
 let space = null;
 
 const generate_world = (space, randomMass, planetData) => {
-  //console.log("generate_world", planetData);
+  console.log("generate_world", planetData);
   let planetColor = SolarSystemFactory.getPlanetColor(planetData, 0);
   if (planetData.visType.toLowerCase() === "lavaatmos") {
     planetColor = SolarSystemFactory.getPlanetColor(planetData, 4);
@@ -271,18 +271,17 @@ const generate_world = (space, randomMass, planetData) => {
         sides: 6,
       }); */
       let neptuneColors = [
+        "rgba(255,255,255,0.2)",
+        "rgba(200,200,200,0.1)",
+        "#6FA5B1",
+        "#5E8A93",
+        "#6FA5B1",
+        "#0c2325",
+        "#1e5359",
         "rgba(0,0,0,0.1)",
-        "rgba(0,0,0,0.15)",
-        "#6FA5B1",
-        "#5E8A93",
-        "#6FA5B1",
-        "#5E8A93",
-        "#697D84",
-        "rgba(255,255,255,0.3)",
-        "rgba(255,255,255,0.5)",
       ];
       const polarLevel = 1;
-      const equatorLevel = 10;
+      const equatorLevel = 3;
       for (let index = 0; index < 36; index++) {
         buildLandMass(
           { sLat: 110, sLng: index * 10, stages: polarLevel },
@@ -291,7 +290,7 @@ const generate_world = (space, randomMass, planetData) => {
       }
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: 100, sLng: index * 10, stages: 2 },
+          { sLat: 100, sLng: index * 10, stages: polarLevel },
           neptuneColors
         );
       }
@@ -301,36 +300,70 @@ const generate_world = (space, randomMass, planetData) => {
           neptuneColors
         );
       }
-      //
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: 180, sLng: index * 10, stages: 2 },
+          { sLat: 130, sLng: index * 10, stages: polarLevel },
           neptuneColors
         );
       }
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: 170, sLng: index * 10, stages: 1 },
-          neptuneColors.reverse()
+          { sLat: 140, sLng: index * 10, stages: polarLevel },
+          neptuneColors
         );
       }
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: 190, sLng: index * 10, stages: 1 },
-          neptuneColors.reverse()
-        );
-      }
-      //
-      for (let index = 0; index < 36; index++) {
-        buildLandMass(
-          { sLat: -100, sLng: index * 10, stages: polarLevel },
+          { sLat: 150, sLng: index * 10, stages: polarLevel },
           neptuneColors
         );
       }
       //
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: -110, sLng: index * 10, stages: 2 },
+          { sLat: 180, sLng: index * 10, stages: equatorLevel },
+          neptuneColors.reverse()
+        );
+      }
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -100, sLng: index * 10, stages: 1 },
+          neptuneColors
+        );
+      }
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -110, sLng: index * 10, stages: 1 },
+          neptuneColors
+        );
+      }
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -120, sLng: index * 10, stages: 1 },
+          neptuneColors
+        );
+      }
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -130, sLng: index * 10, stages: 1 },
+          neptuneColors
+        );
+      }
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -140, sLng: index * 10, stages: 1 },
+          neptuneColors
+        );
+      }
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -150, sLng: index * 10, stages: 1 },
           neptuneColors
         );
       }
@@ -350,39 +383,49 @@ const generate_world = (space, randomMass, planetData) => {
         "rgba(170,110,92,1)",
         "rgba(200,200,200,0.5)",
       ];
-      buildLandMass({ sLat: 20, sLng: 37, stages: 12 },
+      buildLandMass(
+        { sLat: 20, sLng: 37, stages: 12 },
         superEarthColors,
-        false);
-      buildLandMass({ sLat: 40, sLng: -37, stages: 12 },
+        false
+      );
+      buildLandMass(
+        { sLat: 40, sLng: -37, stages: 12 },
         superEarthColors,
-        false);
-      buildLandMass({ sLat: 30, sLng: -27, stages: 12 },
+        false
+      );
+      buildLandMass(
+        { sLat: 30, sLng: -27, stages: 12 },
         superEarthColors,
-        false);
-      buildLandMass({ sLat: 0, sLng: 150, stages: 8 },
+        false
+      );
+      buildLandMass({ sLat: 0, sLng: 150, stages: 8 }, superEarthColors, false);
+      buildLandMass(
+        { sLat: 60, sLng: -70, stages: 12 },
         superEarthColors,
-        false);
-      buildLandMass({ sLat: 60, sLng: -70, stages: 12 },
+        false
+      );
+      buildLandMass(
+        { sLat: 10, sLng: -10, stages: 8 },
         superEarthColors,
-        false);
-      buildLandMass({ sLat: 10, sLng: -10, stages: 8 },
+        false
+      );
+      buildLandMass(
+        { sLat: -50, sLng: -130, stages: 9 },
         superEarthColors,
-        false);
-      buildLandMass({ sLat: -50, sLng: -130, stages: 9 },
+        true
+      );
+      buildLandMass({ sLat: 20, sLng: -90, stages: 6 }, superEarthColors, true);
+      buildLandMass(
+        { sLat: -10, sLng: 10, stages: 12 },
         superEarthColors,
-        true);
-      buildLandMass({ sLat: 20, sLng: -90, stages: 6 },
+        false
+      );
+      buildLandMass(
+        { sLat: -15, sLng: 180, stages: 12 },
         superEarthColors,
-        true);
-      buildLandMass({ sLat: -10, sLng: 10, stages: 12 },
-        superEarthColors,
-        false);
-      buildLandMass({ sLat: -15, sLng: 180, stages: 12 },
-        superEarthColors,
-        false);
-      buildLandMass({ sLat: 35, sLng: 80, stages: 9 },
-        superEarthColors,
-        true);
+        false
+      );
+      buildLandMass({ sLat: 35, sLng: 80, stages: 9 }, superEarthColors, true);
     } else if (query === "gas giant") {
       const gasGiantColors = [
         "rgba(0,0,0,0.1)",
@@ -394,41 +437,84 @@ const generate_world = (space, randomMass, planetData) => {
         "#ab4219",
         "#be5c2a",
         "#a54426",
-        "#a54426"
+        "#a54426",
       ];
-      const darkColors = ["rgba(0,0,0,0.2)",  "rgba(255,255,255,0.5)", "rgba(0,0,0,0.1)","rgba(0,0,0,0.5)"];
+      const darkColors = [
+        "#402323",  
+        "#613734",  
+        "rgba(255,255,255,0.5)",  
+        "#dbc8cf",  
+      ];
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: 180, sLng: index * 10, stages: 2 },
+          { sLat: 180, sLng: index * 10, stages: 4 },
           gasGiantColors
+        );
+      }
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: 140, sLng: index * 10, stages: 1 },
+          darkColors
+        );
+      }
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: 130, sLng: index * 10, stages: 1 },
+          darkColors
         );
       }
       for (let index = 0; index < 36; index++) {
         buildLandMass(
           { sLat: 120, sLng: index * 10, stages: 1 },
-          gasGiantColors
+          darkColors
         );
       }
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: 110, sLng: index * 10, stages: 2 },
-          gasGiantColors.reverse()
+          { sLat: 110, sLng: index * 10, stages: 1 },
+          darkColors.reverse()
         );
       }
       for (let index = 0; index < 36; index++) {
         buildLandMass(
-          { sLat: -110, sLng: index * 10, stages: 2 },
-          gasGiantColors
+          { sLat: 100, sLng: index * 10, stages: 1 },
+          darkColors.reverse()
+        );
+      }
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -100, sLng: index * 10, stages: 1 },
+          darkColors.reverse()
+        );
+      }
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -110, sLng: index * 10, stages: 1 },
+          darkColors.reverse()
         );
       }
       //
       for (let index = 0; index < 36; index++) {
         buildLandMass(
           { sLat: -120, sLng: index * 10, stages: 1 },
-          gasGiantColors.reverse()
+          darkColors
         );
       }
-      buildLandMass({ sLat: -10, sLng: -10,  stages: 10 }, gasGiantColors);
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -130, sLng: index * 10, stages: 1 },
+          darkColors
+        );
+      }
+      //
+      for (let index = 0; index < 36; index++) {
+        buildLandMass(
+          { sLat: -140, sLng: index * 10, stages: 1 },
+          darkColors
+        );
+      }
+      buildLandMass({ sLat: -5, sLng: 0, stages: 10 }, gasGiantColors, true);
     }
   }
 
@@ -578,15 +664,61 @@ function regenerate_world() {
 //
 //
 export default function PlanetView(props) {
-  const [space, setSpace] = useState({});
-  useEffect(() => {
-    // 🐶 ZDOG ILLUSTRATION 🐶
-    if (!space.element) {
-      setSpace(
-        new Zdog.Illustration({
+  const [space, setSpace] = useState(false);
+  const [canvas, setCanvas] = useState(
+    <canvas
+      id="spaceCanvas"
+      className="w-full"
+      height="400"
+      data-planet={props.planet.id}
+    ></canvas>
+  );
+  //
+  const renderPlanet = () => {
+    console.log("regenerate planet");
+    if (props.planet.id) {
+      if (space) {
+        regenerate = true;
+        setCanvas(
+          <canvas
+            id="spaceCanvas"
+            className="w-full"
+            height="400"
+            data-planet={props.planet.id}
+          ></canvas>
+        );
+        requestAnimationFrame(() => {
+          console.log("re creating space");
+          setSpace(
+            new Zdog.Illustration({
+              element: "#spaceCanvas",
+              dragRotate: false,
+              resize: true,
+              rotate: { x: -TAU * 0.05 },
+              onDragStart: function () {
+                isSpinning = false;
+              },
+              onDragEnd: function () {
+                isSpinning = true;
+              },
+              onResize: function (width) {
+                if (space) {
+                  space.zoom = width / 280;
+                }
+              },
+            })
+          );
+          regenerate = false;
+          if (space.element) {
+            console.log("generating world");
+            generate_world(space, false, props.planet);
+          }
+        });
+      } else {
+        const s = new Zdog.Illustration({
           element: "#spaceCanvas",
           dragRotate: false,
-          resize: false,
+          resize: true,
           rotate: { x: -TAU * 0.05 },
           onDragStart: function () {
             isSpinning = false;
@@ -596,18 +728,21 @@ export default function PlanetView(props) {
           },
           onResize: function (width) {
             if (space) {
-              space.zoom = width / 500;
+              space.zoom = width / 280;
             }
           },
-        })
-      );
+        });
+        setSpace(s);
+        if (s.element) {
+          console.log("generating world");
+          generate_world(s, false, props.planet);
+        }
+      }
     }
-    // console.log("space", space);
-    if (space.element) generate_world(space, false, props.planet);
-  });
-  return (
-    <div className="flex justify-center overflow-hidden">
-      <canvas id="spaceCanvas" className="w-full" height="400"></canvas>
-    </div>
-  );
+  };
+  //
+  useEffect(() => {
+    renderPlanet();
+  }, [props.planet]);
+  return <div className="flex justify-center overflow-hidden">{canvas}</div>;
 }

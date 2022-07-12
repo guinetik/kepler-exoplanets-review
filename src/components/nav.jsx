@@ -1,7 +1,7 @@
 import { Navbar } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
 import { Avatar, Modal } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../data/context";
 import { SignInModal, SignUpModal } from "./modals";
@@ -161,6 +161,7 @@ const NavDropdownHeader = (props) => {
  * @returns A functional component to render the dropdown menu on mobile
  */
 const MobileNavDropDown = (props) => {
+  const navigate = useNavigate();
   let userContent = null;
   const [displayName, setDisplayName] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -188,8 +189,17 @@ const MobileNavDropDown = (props) => {
    * @param {Object} item
    */
   const onDropdownClick = (e, item) => {
+    e.preventDefault();
+    console.log("onDropdownClick:", item);
     if (item.key === "signout") {
       props.doSignOut(e);
+    } else if (item.key == "random-planet") {
+      const randomPlanet =
+        AppData.exoplanets[
+          Math.floor(Math.random() * AppData.exoplanets.length)
+        ];
+      const planetId = randomPlanet.id;
+      navigate(`/planets/${planetId}`, { replace: false });
     }
   };
   const isSignedIn = props.signed_in;
@@ -215,7 +225,16 @@ const MobileNavDropDown = (props) => {
           </div>
         );
       } else {
-        return <Dropdown.Item key={item.key}>{item.title}</Dropdown.Item>;
+        return (
+          <Dropdown.Item
+            key={item.key}
+            onClick={(e) => {
+              onDropdownClick(e, item);
+            }}
+          >
+            {item.title}
+          </Dropdown.Item>
+        );
       }
     } else return null;
   });
