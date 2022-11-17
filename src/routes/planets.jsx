@@ -61,7 +61,7 @@ const PlanetCard = (props) => {
         </h2>
         <div className="flex items-center justify-between">
           <Button
-            href={"/exoplanets-review/#/planets/" + props.planet.id}
+            href={"/#/planets/" + props.planet.id}
             outline={true}
             gradientDuoTone="cyanToBlue"
             size="lg"
@@ -70,7 +70,7 @@ const PlanetCard = (props) => {
             <span className="sm:text-xs md:text-md lg:text-lg group">Visit Planet</span>
           </Button>
           <Button
-            href={"/exoplanets-review/#/stars/" + props.planet.pl_hostname}
+            href={"/#/stars/" + props.planet.pl_hostname}
             outline={true}
             gradientDuoTone="pinkToOrange"
             size="lg"

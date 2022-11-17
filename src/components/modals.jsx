@@ -400,7 +400,7 @@ export const ReviewModal = (props) => {
         <div className="fluid-button-bar mt-4">
           <Button
             onClick={(e) => doPostReview(e)}
-            href="/exoplanets-review/review/post"
+            href="/review/post"
             outline={true}
             gradientDuoTone="tealToLime"
             size="xl"

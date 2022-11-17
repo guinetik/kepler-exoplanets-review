@@ -78,7 +78,7 @@ const StarCard = (props) => {
         </h2>
         <div className="flex items-center justify-between">
           <Button
-            href={"/exoplanets-review/#/stars/" + props.star.id}
+            href={"/#/stars/" + props.star.id}
             outline={true}
             gradientDuoTone="cyanToBlue"
             size="lg"

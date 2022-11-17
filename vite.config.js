@@ -4,6 +4,6 @@ const dev = process.env.NODE_ENV === 'development';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/exoplanets-review/",
+  base: "",
   plugins: [react()]
 })

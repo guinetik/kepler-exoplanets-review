@@ -100,7 +100,7 @@ export default function Apod() {
                       <div className="grid items-center md:grid-cols-2 grid-cols-1 justify-items-stretch md:justify-items-center fluid-button-bar gap-4 my-8 mx-4 sm:mx-1 lg:mx-10">
                         <Button
                           onClick={(e) => doLoadPreviousDay(e)}
-                          href="/exoplanets-review/apod/previous"
+                          href="/apod/previous"
                           outline={true}
                           gradientDuoTone="purpleToBlue"
                           size="xl"
@@ -117,7 +117,7 @@ export default function Apod() {
                         <Button
                           disabled={!nextEnabled}
                           onClick={(e) => doLoadNextDay(e)}
-                          href="/exoplanets-review/apod/next"
+                          href="/apod/next"
                           outline={true}
                           gradientDuoTone="purpleToBlue"
                           size="xl"

@@ -62,7 +62,7 @@ export default function Home() {
                     </p>
                     <div className="grid items-center md:grid-cols-2 grid-cols-1 justify-items-stretch md:justify-items-center fluid-button-bar gap-4 my-8 mx-4 sm:mx-1 lg:mx-10">
                       <Button
-                        href="/exoplanets-review/#/stars/"
+                        href="/#/stars/"
                         outline={true}
                         gradientDuoTone="pinkToOrange"
                         size="xl"
@@ -71,7 +71,7 @@ export default function Home() {
                         <span className="sm:text-md md:text-md lg:text-lg">Discover the Stars</span>
                       </Button>
                       <Button
-                        href="/exoplanets-review/#/planets/"
+                        href="/#/planets/"
                         outline={true}
                         gradientDuoTone="cyanToBlue"
                         size="xl"

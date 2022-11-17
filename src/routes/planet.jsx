@@ -120,7 +120,7 @@ export default function PlanetPage() {
                     </p>
                     <div className="grid items-center grid-cols-1 justify-items-stretch fluid-button-bar gap-4 my-4 mx-4">
                       <Button
-                        href="/exoplanets-review/reviews/create"
+                        href="/reviews/create"
                         outline={true}
                         onClick={openCreateReviewModal}
                         gradientDuoTone="pinkToOrange"

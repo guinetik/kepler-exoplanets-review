@@ -46,7 +46,7 @@ export default function KeplerNav() {
         }}
       />
       <Navbar fluid={true} rounded={true}>
-        <Navbar.Brand href="/exoplanets-review/">
+        <Navbar.Brand href="/">
           <img
             src="https://exoplanets.nasa.gov/assets/galaxy_icon.svg"
             className="mr-3 h-6 sm:h-9"

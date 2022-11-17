@@ -629,14 +629,14 @@ class AppDataImpl {
     this.setLoading(true);
     if (this.exoplanets.length == 0) {
       console.time("loading_exos");
-      const binary = await fetch("/exoplanets-review/data/out/exoplanets.json");
+      const binary = await fetch("/data/out/exoplanets.json");
       this.exoplanets = await binary.json();
       console.timeEnd("loading_exos");
     }
     //
     if (this.stars.length == 0) {
       console.time("loading_stars");
-      const binary = await fetch("/exoplanets-review/data/out/exostars.json");
+      const binary = await fetch("/data/out/exostars.json");
       this.stars = await binary.json();
       console.timeEnd("loading_stars");
       //console.log("Stars Loaded: ", this.stars.length);
